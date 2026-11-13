@@ -1,0 +1,31 @@
+<resources>
+    <style name="Text.Title">
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+    <style name="Text.Subtitle">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+    <style name="Text.Body">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/text_primary</item>
+    </style>
+    <style name="Text.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/text_secondary</item>
+    </style>
+
+    <style name="Card.Dessert" parent="Widget.Material3.CardView.Outlined">
+        <item name="cardCornerRadius">@dimen/radius_card</item>
+        <item name="strokeColor">@color/stroke</item>
+        <item name="cardBackgroundColor">@color/surface</item>
+    </style>
+
+    <style name="Button.Dessert" parent="Widget.Material3.Button">
+        <item name="cornerRadius">28dp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+</resources>

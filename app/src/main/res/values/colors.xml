@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="primary">#D4505A</color>
+    <color name="primary_light">#FBE3E3</color>
+    <color name="background">#FBF7EE</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="card_beige">#F1ECE0</color>
+    <color name="text_primary">#2B2523</color>
+    <color name="text_secondary">#8A817B</color>
+    <color name="stroke">#E6DFD3</color>
+    <color name="map_green">#DCE6CF</color>
 </resources>

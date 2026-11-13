@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">DessetripAndroid</string>
+    <string name="nav_explore">탐색</string>
+    <string name="nav_archive">내 도감</string>
+    <string name="nav_record">기록하기</string>
+    <string name="nav_community">커뮤니티</string>
+    <string name="nav_my">마이</string>
 </resources>
