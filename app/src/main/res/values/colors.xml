@@ -9,4 +9,5 @@
     <color name="text_secondary">#8A817B</color>
     <color name="stroke">#E6DFD3</color>
     <color name="map_green">#DCE6CF</color>
+    <color name="white">#FFFFFF</color>
 </resources>
