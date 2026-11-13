@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/nav_explore" android:icon="@drawable/ic_map" android:title="탐색"/>
+    <item android:id="@+id/nav_archive" android:icon="@drawable/ic_book" android:title="내 도감"/>
+    <item android:id="@+id/nav_record"  android:icon="@drawable/ic_add" android:title="기록하기"/>
+    <item android:id="@+id/nav_community" android:icon="@drawable/ic_people" android:title="커뮤니티"/>
+    <item android:id="@+id/nav_my" android:icon="@drawable/ic_person" android:title="마이"/>
+</menu>
