@@ -1,4 +1,4 @@
-package com.example.dessetripandroid;
+package com.example.dessertrip;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -6,11 +6,11 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
-import com.example.dessetripandroid.ui.archive.ArchiveFragment;
-import com.example.dessetripandroid.ui.community.CommunityFragment;
-import com.example.dessetripandroid.ui.explore.ExploreFragment;
-import com.example.dessetripandroid.ui.my.MyFragment;
-import com.example.dessetripandroid.ui.record.RecordActivity;
+import com.example.dessertrip.ui.archive.ArchiveFragment;
+import com.example.dessertrip.ui.community.CommunityFragment;
+import com.example.dessertrip.ui.explore.ExploreFragment;
+import com.example.dessertrip.ui.my.MyFragment;
+import com.example.dessertrip.ui.record.RecordActivity;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

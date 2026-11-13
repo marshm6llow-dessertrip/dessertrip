@@ -1,4 +1,4 @@
-package com.example.dessetripandroid;
+package com.example.dessertrip;
 
 import org.junit.Test;
 
