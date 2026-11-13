@@ -1,4 +1,4 @@
-package com.example.dessetripandroid.ui.record;
+package com.example.dessertrip.ui.record;
 
 import androidx.appcompat.app.AppCompatActivity;
 

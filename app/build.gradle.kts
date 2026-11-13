@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.dessetripandroid"
+    namespace = "com.example.dessertrip"
     compileSdk {
         version = release(37)
     }

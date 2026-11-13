@@ -1,4 +1,4 @@
-package com.example.dessetripandroid.ui.community;
+package com.example.dessertrip.ui.community;
 
 import androidx.fragment.app.Fragment;
 
