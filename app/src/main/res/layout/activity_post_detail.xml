@@ -156,37 +156,51 @@
                 android:scaleType="centerInside"
                 android:contentDescription="게시글 사진" />
 
-            <!-- 좋아요 영역 -->
+            <!-- 좋아요 및 댓글 수 -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:paddingTop="8dp"
-                android:paddingBottom="16dp">
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp">
 
-                <!-- 좋아요 버튼 -->
                 <ImageView
                     android:id="@+id/iv_like"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
                     android:src="@drawable/ic_heart"
-                    android:contentDescription="좋아요 버튼" />
+                    android:contentDescription="좋아요" />
 
-                <!-- 좋아요 수 -->
                 <TextView
                     android:id="@+id/tv_like_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:text="좋아요 12"
-                    android:textColor="#514A43"
-                    android:textSize="14sp" />
+                    android:text="12"
+                    android:textColor="#302B27"
+                    android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/iv_comment_icon"
+                    android:layout_width="28dp"
+                    android:layout_height="28dp"
+                    android:layout_marginStart="28dp"
+                    android:src="@drawable/ic_comment"
+                    android:contentDescription="댓글" />
+
+                <TextView
+                    android:id="@+id/tv_comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="3"
+                    android:textColor="#302B27"
+                    android:textSize="16sp" />
 
             </LinearLayout>
-
             <!-- 댓글 목록 -->
             <LinearLayout
                 android:layout_width="match_parent"
