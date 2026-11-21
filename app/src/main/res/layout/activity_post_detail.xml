@@ -6,7 +6,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAF7F1"
+    android:background="@color/background"
     tools:context=".ui.community.PostDetailActivity">
 
     <!-- 상단 헤더 -->
@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="‹"
-            android:textColor="#302B27"
+            android:textColor="@color/text_primary"
             android:textSize="30sp" />
 
         <TextView
@@ -33,7 +33,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="게시판"
-            android:textColor="#302B27"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="⋯"
-            android:textColor="#302B27"
+            android:textColor="@color/text_primary"
             android:textSize="24sp" />
 
     </LinearLayout>
@@ -78,7 +78,7 @@
                     android:layout_height="42dp"
                     android:src="@android:drawable/ic_menu_myplaces"
                     android:scaleType="centerCrop"
-                    android:background="#F0E8DF"
+                    android:background="@color/card_beige"
                     android:padding="8dp"
                     android:contentDescription="작성자 프로필 이미지" />
 
@@ -95,7 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="다은"
-                        android:textColor="#302B27"
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -105,7 +105,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
                         android:text="2026.11.18"
-                        android:textColor="#99918A"
+                        android:textColor="@color/text_secondary"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -126,7 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="소금빵 맛있는 집 추천해주세요!"
-                    android:textColor="#302B27"
+                    android:textColor="@color/text_primary"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -137,7 +137,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="12dp"
                     android:text="연남동 근처에서 소금빵 잘하는 카페 아시는 분 계신가요? 버터향이 진한 곳으로 추천 부탁드려요. 많이 달지 않아서 라테랑 정말 잘 어울렸어요. 햇살 드는 창가에서 천천히 즐기기 좋은 오후였어요."
-                    android:textColor="#514A43"
+                    android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     android:lineSpacingExtra="5dp" />
 
@@ -152,7 +152,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
                 android:src="@android:drawable/ic_menu_gallery"
-                android:background="#F0E8DF"
+                android:background="@color/card_beige"
                 android:scaleType="centerInside"
                 android:contentDescription="게시글 사진" />
 
@@ -180,7 +180,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="12"
-                    android:textColor="#302B27"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
                 <ImageView
@@ -197,7 +197,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text="3"
-                    android:textColor="#302B27"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp" />
 
             </LinearLayout>
@@ -215,7 +215,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="댓글 2개"
-                    android:textColor="#302B27"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="16dp" />
@@ -231,7 +231,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:src="@android:drawable/ic_menu_myplaces"
-                        android:background="#F0E8DF"
+                        android:background="@color/card_beige"
                         android:padding="7dp"
                         android:contentDescription="댓글 작성자 프로필" />
 
@@ -254,7 +254,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="소은"
-                                android:textColor="#302B27"
+                                android:textColor="@color/text_primary"
                                 android:textSize="13sp"
                                 android:textStyle="bold" />
 
@@ -263,7 +263,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
                                 android:text="5분 전"
-                                android:textColor="#99918A"
+                                android:textColor="@color/text_secondary"
                                 android:textSize="11sp" />
 
                         </LinearLayout>
@@ -274,7 +274,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="사진만 봐도 폭신해 보여 🍓 다음엔 나랑 창가 자리 찜!"
-                            android:textColor="#514A43"
+                            android:textColor="@color/text_primary"
                             android:textSize="13sp"
                             android:lineSpacingExtra="3dp" />
 
@@ -284,7 +284,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="답글 달기"
-                            android:textColor="#99918A"
+                            android:textColor="@color/text_secondary"
                             android:textSize="11sp"
                             android:textStyle="bold" />
 
@@ -303,7 +303,7 @@
                         android:layout_width="36dp"
                         android:layout_height="36dp"
                         android:src="@android:drawable/ic_menu_myplaces"
-                        android:background="#F0E8DF"
+                        android:background="@color/card_beige"
                         android:padding="7dp"
                         android:contentDescription="댓글 작성자 프로필" />
 
@@ -326,7 +326,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="버터산책"
-                                android:textColor="#302B27"
+                                android:textColor="@color/text_primary"
                                 android:textSize="13sp"
                                 android:textStyle="bold" />
 
@@ -335,7 +335,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="8dp"
                                 android:text="35분 전"
-                                android:textColor="#99918A"
+                                android:textColor="@color/text_secondary"
                                 android:textSize="11sp" />
 
                         </LinearLayout>
@@ -346,7 +346,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="4dp"
                             android:text="크림 가벼운 케이크 찾고 있었는데! 주말에 가봐야겠어요."
-                            android:textColor="#514A43"
+                            android:textColor="@color/text_primary"
                             android:textSize="13sp"
                             android:lineSpacingExtra="3dp" />
 
@@ -356,7 +356,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="8dp"
                             android:text="답글 달기"
-                            android:textColor="#99918A"
+                            android:textColor="@color/text_secondary"
                             android:textSize="11sp"
                             android:textStyle="bold" />
                     </LinearLayout>
@@ -376,7 +376,7 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingHorizontal="16dp"
-        android:background="#FAF7F1"
+        android:background="@color/background"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <EditText
@@ -396,7 +396,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="↑"
-            android:textColor="#D94F55"
+            android:textColor="@color/primary"
             android:textSize="22sp" />
 
     </LinearLayout>
