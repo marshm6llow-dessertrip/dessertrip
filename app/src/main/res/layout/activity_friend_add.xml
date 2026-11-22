@@ -1,48 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FAF7F0"
+    android:background="@color/background"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingStart="22dp"
-        android:paddingEnd="22dp"
+        android:paddingStart="@dimen/screen_padding"
+        android:paddingEnd="@dimen/screen_padding"
         android:paddingBottom="32dp">
 
         <!-- 상단 -->
         <TextView
+            style="@style/Text.Subtitle"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_marginTop="25dp"
             android:gravity="center"
             android:text="친구 추가"
-            android:textColor="#302B2B"
-            android:textSize="17sp"
-            android:textStyle="bold" />
+            android:textSize="17sp" />
 
         <TextView
+            style="@style/Text.Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="45dp"
             android:text="달콤한 취향을&#10;함께 나눠요"
-            android:textColor="#302B2B"
             android:textSize="26sp"
-            android:textStyle="bold"
             android:lineSpacingExtra="5dp" />
 
         <TextView
+            style="@style/Text.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:text="친구 코드를 입력하고 새로운 친구를 만나보세요."
-            android:textColor="#888080"
             android:textSize="13sp" />
 
         <!-- 내 친구 코드 카드 -->
@@ -55,11 +52,10 @@
             android:padding="18dp">
 
             <TextView
+                style="@style/Text.Caption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="내 친구 코드"
-                android:textColor="#777070"
-                android:textSize="12sp" />
+                android:text="내 친구 코드" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -70,37 +66,36 @@
 
                 <TextView
                     android:id="@+id/tv_my_friend_code"
+                    style="@style/Text.Title"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="#2343254765"
-                    android:textColor="#D94B5B"
-                    android:textSize="21sp"
-                    android:textStyle="bold" />
+                    android:textColor="@color/primary"
+                    android:textSize="21sp" />
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_copy_code"
+                    style="@style/Button.Dessert"
                     android:layout_width="74dp"
                     android:layout_height="44dp"
-                    android:backgroundTint="#FFFFFF"
+                    android:backgroundTint="@color/white"
+                    android:fontFamily="@font/pretendard"
                     android:text="복사"
-                    android:textColor="#D94B5B"
-                    app:cornerRadius="12dp"
-                    android:textSize="13sp"
-                    android:textStyle="bold"/>
+                    android:textColor="@color/primary"
+                    android:textSize="13sp" />
 
             </LinearLayout>
         </LinearLayout>
 
         <!-- 친구 검색 -->
         <TextView
+            style="@style/Text.Subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="34dp"
             android:text="친구 코드 입력"
-            android:textColor="#302B2B"
-            android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -111,49 +106,45 @@
 
             <EditText
                 android:id="@+id/et_friend_code"
+                style="@style/Text.Body"
                 android:layout_width="0dp"
                 android:layout_height="52dp"
                 android:layout_weight="1"
                 android:background="@drawable/bg_friend_input"
                 android:hint="#5820391647"
                 android:inputType="text"
-                android:paddingStart="16dp"
+                android:paddingStart="@dimen/space_m"
                 android:paddingEnd="12dp"
                 android:singleLine="true"
-                android:textColor="#302B2B"
-                android:textColorHint="#999090"
-                android:textSize="14sp" />
+                android:textColorHint="@color/text_secondary" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_find_friend"
+                style="@style/Button.Dessert"
                 android:layout_width="108dp"
                 android:layout_height="52dp"
                 android:layout_marginStart="10dp"
-                android:backgroundTint="#D94B5B"
+                android:backgroundTint="@color/primary"
+                android:fontFamily="@font/pretendard"
                 android:text="친구 찾기"
-                android:textColor="#FFFFFF"
-                app:cornerRadius="12dp"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
+                android:textColor="@color/white"
+                android:textSize="15sp" />
         </LinearLayout>
 
         <TextView
+            style="@style/Text.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:text="#을 포함한 친구 코드를 정확히 입력해 주세요."
-            android:textColor="#888080"
-            android:textSize="12sp" />
+            android:text="#을 포함한 친구 코드를 정확히 입력해 주세요." />
 
         <!-- 검색 결과 -->
         <TextView
+            style="@style/Text.Subtitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="34dp"
-            android:text="검색 결과"
-            android:textColor="#302B2B"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+            android:text="검색 결과" />
 
         <LinearLayout
             android:id="@+id/layout_friend_result"
@@ -162,7 +153,7 @@
             android:layout_marginTop="14dp"
             android:background="@drawable/bg_friend_result_card"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="@dimen/space_m"
             android:visibility="gone">
 
             <LinearLayout
@@ -177,54 +168,50 @@
                     android:padding="0dp"
                     android:layout_margin="0dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/dessert_donut"
-                    />
+                    android:src="@drawable/dessert_donut" />
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:layout_marginStart="8dp"
+                    android:layout_marginStart="@dimen/space_s"
                     android:orientation="vertical">
 
                     <TextView
                         android:id="@+id/tv_friend_name"
+                        style="@style/Text.Subtitle"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="까눌레수집가"
-                        android:textColor="#302B2B"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+                        android:text="까눌레수집가" />
 
                     <TextView
                         android:id="@+id/tv_friend_code"
+                        style="@style/Text.Caption"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="#5820391647"
-                        android:textColor="#888080"
-                        android:textSize="12sp" />
+                        android:text="#5820391647" />
                 </LinearLayout>
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_friend_request"
+                    style="@style/Button.Dessert"
                     android:layout_width="93dp"
                     android:layout_height="53dp"
-                    android:backgroundTint="#D94B5B"
+                    android:backgroundTint="@color/primary"
+                    android:fontFamily="@font/pretendard"
                     android:text="친구 요청"
-                    android:textColor="#FFFFFF"
-                    app:cornerRadius="12dp"
-                    android:textSize="11sp"
-                    android:textStyle="bold"/>
+                    android:textColor="@color/white"
+                    android:textSize="11sp" />
             </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_friend_bio"
+                style="@style/Text.Caption"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="18dp"
                 android:text="바삭한 첫 입을 찾아다녀요."
-                android:textColor="#777070"
                 android:textSize="13sp" />
         </LinearLayout>
     </LinearLayout>
