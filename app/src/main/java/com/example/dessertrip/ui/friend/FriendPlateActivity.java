@@ -29,21 +29,21 @@ public class FriendPlateActivity extends AppCompatActivity {
     private View activeStickerLabel;
     private ImageView selectedStickerImage;
 
-    // API 연동 전 테스트용 프로필 데이터
-    private String friendNickname = "딸기시루";
-    private String friendCode = "#41237802";
-    private String friendBio = "딸기 시루 나에게로. 🍓";
+    //TODO: 친구 플레이트 API 연동 시 테스트용 데이터 제거
+    private static final String TEST_FRIEND_NICKNAME = "딸기시루";
+    private static final String TEST_FRIEND_CODE = "#41237802";
+    private static final String TEST_FRIEND_BIO = "딸기 시루 나에게로. 🍓";
 
     // 테스트용 레벨 데이터
-    private int friendLevel = 3;
-    private String levelTitle = "초보 탐험가";
-    private int nextLevelTarget = 30;
+    private static final int TEST_FRIEND_LEVEL = 3;
+    private static final String TEST_LEVEL_TITLE = "초보 탐험가";
+    private static final int TEST_NEXT_LEVEL_TARGET = 30;
 
     // 테스트용 카테고리별 수집 데이터
-    private int cakeCount = 3;
-    private int breadCount = 7;
-    private int bakedCount = 2;
-    private int etcCount = 3;
+    private static final int TEST_CAKE_COUNT = 8;
+    private static final int TEST_BREAD_COUNT = 7;
+    private static final int TEST_BAKED_COUNT = 2;
+    private static final int TEST_ETC_COUNT = 3;
 
 
     @Override
@@ -64,7 +64,7 @@ public class FriendPlateActivity extends AppCompatActivity {
         dessertPlate.post(this::renderDessertStickers);
     }
 
-
+    //TODO: 친구 스티커 목록 API 연동
     private void loadSampleStickers() {
 
         dessertStickers.clear();
@@ -319,13 +319,14 @@ public class FriendPlateActivity extends AppCompatActivity {
         new AlertDialog.Builder(this)
                 .setTitle("스티커 요청")
                 .setMessage(
-                        friendNickname + "님에게 "
+                        TEST_FRIEND_NICKNAME + "님에게 "
                                 + sticker.getName()
                                 + " 스티커를 요청하시겠습니까?"
                 )
                 .setNegativeButton("취소", null)
                 .setPositiveButton("요청하기", (dialog, which) -> {
 
+                    // TODO: 스티커 요청 API 연동
                     Toast.makeText(
                             this,
                             "테스트용 요청입니다.",
@@ -363,31 +364,42 @@ public class FriendPlateActivity extends AppCompatActivity {
         ProgressBar pbFriendLevel = findViewById(R.id.pb_friend_level);
 
         // 전체 수집 개수 계산
-        int totalCount = cakeCount + breadCount + bakedCount + etcCount;
+        int totalCount = TEST_CAKE_COUNT
+                + TEST_BREAD_COUNT
+                + TEST_BAKED_COUNT
+                + TEST_ETC_COUNT;
 
         // 다음 레벨까지 남은 개수
-        int remainingCount = Math.max(0, nextLevelTarget - totalCount);
+        int remainingCount = Math.max(
+                0, TEST_NEXT_LEVEL_TARGET - totalCount
+        );
 
         // 프로필 데이터
-        tvPlateTitle.setText(friendNickname + "의 디저트 플레이트");
-        tvFriendCode.setText("친구 코드 : " + friendCode);
-        tvFriendBio.setText(friendBio);
+        tvPlateTitle.setText(
+                TEST_FRIEND_NICKNAME + "의 디저트 플레이트"
+        );
+        tvFriendCode.setText("친구 코드 : " + TEST_FRIEND_CODE);
+        tvFriendBio.setText(TEST_FRIEND_BIO);
 
         // 레벨 데이터
-        tvFriendLevel.setText("Lv. " + friendLevel + " · " + levelTitle);
-        tvNextLevel.setText("다음 레벨까지 " + remainingCount + "개 디저트 기록");
+        tvFriendLevel.setText(
+                "Lv. " + TEST_FRIEND_LEVEL + " · " + TEST_LEVEL_TITLE
+        );
+        tvNextLevel.setText(
+                "다음 레벨까지 " + remainingCount + "개 디저트 기록"
+        );
         tvLevelCurrent.setText(String.valueOf(totalCount));
-        tvLevelMax.setText("/ " + nextLevelTarget);
+        tvLevelMax.setText("/ " + TEST_NEXT_LEVEL_TARGET);
 
         // 레벨 진행률
-        pbFriendLevel.setMax(nextLevelTarget);
+        pbFriendLevel.setMax(TEST_NEXT_LEVEL_TARGET);
         pbFriendLevel.setProgress(totalCount);
 
         // 카테고리별 수집 개수
-        tvCakeCount.setText("케이크 " + cakeCount);
-        tvBreadCount.setText("빵 " + breadCount);
-        tvBakedCount.setText("구움과자 " + bakedCount);
-        tvEtcCount.setText("기타 " + etcCount);
+        tvCakeCount.setText("케이크 " + TEST_CAKE_COUNT);
+        tvBreadCount.setText("빵 " + TEST_BREAD_COUNT);
+        tvBakedCount.setText("구움과자 " + TEST_BAKED_COUNT);
+        tvEtcCount.setText("기타 " + TEST_ETC_COUNT);
 
         // 전체 수집 개수
         tvTotalCount.setText(totalCount + "개 수집");
