@@ -26,8 +26,14 @@
             android:name="com.example.dessertrip.ui.community.PostDetailActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
+
         <activity
-            android:name="com.example.dessertrip.ui.community.PostListActivity"
+            android:name="com.example.dessertrip.ui.friend.FriendAddActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.example.dessertrip.ui.friend.FriendPlateActivity"
             android:exported="false" />
     </application>
+
 </manifest>
