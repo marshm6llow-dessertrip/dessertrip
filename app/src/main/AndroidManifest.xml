@@ -32,6 +32,9 @@
             android:exported="false" />
 
         <activity
+            android:name="com.example.dessertrip.ui.friend.StickerGiftActivity"
+            android:exported="false" />
+        <activity
             android:name="com.example.dessertrip.ui.friend.FriendPlateActivity"
             android:exported="false" />
     </application>
