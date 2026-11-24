@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:orientation="vertical">
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="56dp"
+        android:gravity="center_vertical" android:orientation="horizontal" android:paddingStart="8dp"
+        android:paddingEnd="8dp" android:weightSum="4">
+        <ImageView android:id="@+id/closeButton" android:layout_width="0dp" android:layout_height="48dp"
+            android:layout_weight="1" android:contentDescription="닫기" android:padding="12dp"
+            android:src="@drawable/ic_close" app:tint="@color/white" />
+        <ImageView android:id="@+id/flashButton" android:layout_width="0dp" android:layout_height="48dp"
+            android:layout_weight="1" android:contentDescription="플래시" android:padding="12dp"
+            android:src="@drawable/ic_flash_off" app:tint="@color/white" />
+        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+            android:gravity="center" android:text="3:4" android:textColor="@color/white" android:textSize="12sp" />
+        <View android:layout_width="0dp" android:layout_height="48dp" android:layout_weight="1" />
+    </LinearLayout>
+
+    <com.example.dessertrip.ui.collect.common.AspectFrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:aspect="1.3333">
+
+        <androidx.camera.view.PreviewView android:id="@+id/previewView" android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <TextView android:id="@+id/permissionText" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_gravity="center" android:text="카메라 권한이 필요해요. 탭해서 허용해 주세요."
+            android:textColor="@color/white" android:visibility="gone" />
+
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal" android:layout_marginTop="12dp"
+            android:background="@drawable/bg_round_20" android:backgroundTint="@color/scrim" android:paddingStart="14dp" android:paddingTop="8dp"
+            android:paddingEnd="14dp" android:paddingBottom="8dp" android:text="디저트가 화면 안에 들어오게 해주세요"
+            android:textColor="@color/white" android:textSize="10sp" />
+
+        <LinearLayout android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal" android:layout_marginBottom="12dp"
+            android:orientation="horizontal">
+            <TextView android:id="@+id/zoomHalf" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp" android:paddingStart="12dp" android:paddingTop="6dp"
+                android:paddingEnd="12dp" android:paddingBottom="6dp" android:text="0.5" android:textSize="12sp" />
+            <TextView android:id="@+id/zoomOne" android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:paddingStart="12dp" android:paddingTop="6dp" android:paddingEnd="12dp"
+                android:paddingBottom="6dp" android:text="1x" android:textSize="12sp" />
+        </LinearLayout>
+    </com.example.dessertrip.ui.collect.common.AspectFrameLayout>
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1"
+        android:paddingStart="28dp" android:paddingEnd="28dp">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_gravity="top|center_horizontal" android:layout_marginTop="14dp" android:text="사진"
+            android:textColor="#FFD54F" android:textSize="12sp" android:textStyle="bold" />
+        <ImageView android:id="@+id/galleryButton" android:layout_width="52dp" android:layout_height="52dp"
+            android:layout_gravity="start|center_vertical" android:background="@drawable/bg_oval" android:backgroundTint="@color/scrim"
+            android:contentDescription="앨범" android:padding="13dp" android:src="@drawable/ic_photo_library"
+            app:tint="@color/white" />
+        <View android:id="@+id/shutterButton" android:layout_width="72dp" android:layout_height="72dp"
+            android:layout_gravity="center" android:background="@drawable/ring_shutter" />
+        <ImageView android:id="@+id/flipButton" android:layout_width="52dp" android:layout_height="52dp"
+            android:layout_gravity="end|center_vertical" android:contentDescription="카메라 전환" android:padding="13dp"
+            android:src="@drawable/ic_flip_camera" app:tint="@color/white" />
+    </FrameLayout>
+</LinearLayout>

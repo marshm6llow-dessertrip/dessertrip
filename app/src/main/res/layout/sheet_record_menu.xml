@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingStart="20dp"
+    android:paddingTop="20dp"
+    android:paddingEnd="20dp"
+    android:paddingBottom="24dp">
+
+    <TextView style="@style/Dessert.Text.Title" android:layout_width="wrap_content" android:layout_height="wrap_content"
+        android:text="무엇을 할까요?" />
+
+    <LinearLayout android:id="@+id/stickerOption" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="16dp" android:background="@drawable/bg_round_16" android:backgroundTint="@color/cream_dark"
+        android:foreground="?attr/selectableItemBackground" android:gravity="center_vertical"
+        android:orientation="vertical" android:padding="16dp">
+        <TextView style="@style/Dessert.Text.Title" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="디저트 스티커 생성" android:textSize="16sp" />
+        <TextView style="@style/Dessert.Text.Small" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="2dp" android:text="사진 속 디저트를 스티커로 만들어 도감에 모아요." />
+    </LinearLayout>
+
+    <LinearLayout android:id="@+id/postOption" android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" android:background="@drawable/bg_round_16" android:backgroundTint="@color/cream_dark"
+        android:foreground="?attr/selectableItemBackground" android:gravity="center_vertical"
+        android:orientation="vertical" android:padding="16dp">
+        <TextView style="@style/Dessert.Text.Title" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:text="커뮤니티 게시글 작성" android:textSize="16sp" />
+        <TextView style="@style/Dessert.Text.Small" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="2dp" android:text="다른 사람들과 디저트 이야기를 나눠요." />
+    </LinearLayout>
+</LinearLayout>
