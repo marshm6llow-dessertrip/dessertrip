@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 카테고리가 사용자가 추가할 수 있는 목록이라 칩은 코드(ArchiveFragment.bindChips)에서 만든다. 많아지면 가로로 스크롤. -->
+<HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clipToPadding="false"
+    android:scrollbars="none">
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chipGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:chipSpacingHorizontal="8dp"
+        app:selectionRequired="true"
+        app:singleLine="true"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip android:id="@+id/chipAll" style="@style/Widget.Dessert.Chip"
+            android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true" />
+    </com.google.android.material.chip.ChipGroup>
+</HorizontalScrollView>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:paddingBottom="12dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="bottom"
+                android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView style="@style/Dessert.Text.Caption" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="MY DESSERT ARCHIVE" />
+                    <TextView android:id="@+id/title" style="@style/Dessert.Text.Headline" android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" android:text="의 디저트 도감" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <include android:id="@+id/levelCard" layout="@layout/include_level_card" />
+            <include android:id="@+id/chips" layout="@layout/include_category_chips" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="8dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+                <TextView style="@style/Dessert.Text.Title" android:layout_width="0dp" android:layout_height="wrap_content"
+                    android:layout_weight="1" android:text="나의 달콤한 조각들" />
+                <TextView
+                    android:id="@+id/sortButton"
+                    style="@style/Dessert.Text.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:drawableEnd="@drawable/ic_sort"
+                    android:drawablePadding="4dp"
+                    android:drawableTint="@color/ink_sub"
+                    android:gravity="center_vertical"
+                    android:minHeight="36dp"
+                    android:text="최근 수집순" />
+            </LinearLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false" />
+
+            <Space android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1" />
+
+            <!-- 스크롤을 내리는 동안은 화면 아래에 붙어 있다가, 맨 아래에 닿으면 목록 끝에 자리 잡는다 (ArchiveFragment.floatBanner). 그림자는 떠 있을 때만 생긴다 -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/plateBanner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="24dp"
+                app:cardElevation="0dp"
+                app:strokeColor="@color/rose"
+                app:strokeWidth="1dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:gravity="center_vertical" android:orientation="horizontal"
+                    android:paddingStart="20dp" android:paddingEnd="16dp" android:paddingTop="16dp" android:paddingBottom="16dp">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content"
+                        android:layout_weight="1" android:orientation="vertical">
+                        <TextView style="@style/Dessert.Text.Label" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:text="나만의 디저트 플레이트 장식하기"
+                            android:textSize="14sp" />
+                        <TextView style="@style/Dessert.Text.Small" android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" android:layout_marginTop="2dp"
+                            android:text="내가 모은 디저트 스티커로 디저트 플레이트를 장식할 수 있어요."
+                            android:textSize="11sp" />
+                    </LinearLayout>
+                    <ImageView android:layout_width="24dp" android:layout_height="24dp"
+                        android:layout_marginStart="8dp" android:importantForAccessibility="no"
+                        android:src="@drawable/ic_add" app:tint="@color/rose" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <ProgressBar
+        android:id="@+id/loadingSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/rose" />
+
+    <LinearLayout
+        android:id="@+id/errorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:visibility="gone">
+        <TextView android:id="@+id/errorText" style="@style/Dessert.Text.Small" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:gravity="center" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/retryButton"
+            style="@style/Widget.Dessert.Button.Outline"
+            android:layout_width="140dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:text="다시 시도" />
+    </LinearLayout>
+</FrameLayout>

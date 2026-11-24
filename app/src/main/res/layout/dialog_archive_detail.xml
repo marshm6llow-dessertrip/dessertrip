@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_round_24" android:backgroundTint="@color/cream"
+    android:clipToOutline="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <com.example.dessertrip.ui.collect.common.AspectFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_round_16" android:backgroundTint="@color/cream_dark">
+            <ImageView android:id="@+id/detailSticker" android:layout_width="match_parent"
+                android:layout_height="match_parent" android:contentDescription="디저트 스티커" android:padding="32dp" />
+            <TextView android:id="@+id/numberText" style="@style/Dessert.Text.Small" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:layout_margin="10dp" android:textSize="10sp" />
+        </com.example.dessertrip.ui.collect.common.AspectFrameLayout>
+
+        <TextView android:id="@+id/detailName" style="@style/Dessert.Text.Headline" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginTop="12dp" android:textSize="20sp" />
+        <TextView android:id="@+id/detailPlace" style="@style/Dessert.Text.Small" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" android:gravity="center_horizontal" android:orientation="vertical">
+            <TextView style="@style/Dessert.Text.Small" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" android:text="오늘의 한 입은 어땠나요?" android:textColor="@color/ink" />
+            <RatingBar android:id="@+id/detailStars"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:numStars="5" android:stepSize="0.5" android:isIndicator="true"
+                android:progressTint="@color/rose" android:progressBackgroundTint="@color/line"
+                android:secondaryProgressTint="@color/line" />
+            <TextView android:id="@+id/detailRatingLabel" style="@style/Dessert.Text.Caption" android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <TextView style="@style/Dessert.Text.Small" android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginTop="16dp" android:text="카테고리" />
+        <TextView android:id="@+id/detailCategory" style="@style/Dessert.Text.Body" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginTop="6dp" android:background="@drawable/bg_round_20" android:backgroundTint="@color/cream_dark"
+            android:paddingStart="16dp" android:paddingEnd="16dp" android:paddingTop="8dp" android:paddingBottom="8dp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.chip.ChipGroup android:id="@+id/detailTags" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="6dp" app:chipSpacingHorizontal="6dp" />
+
+        <TextView android:id="@+id/detailNote" style="@style/Dessert.Text.Body" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="14dp"
+            android:background="@drawable/bg_round_16" android:backgroundTint="@color/cream_dark" android:minHeight="120dp" android:padding="14dp"
+            android:textSize="12sp" />
+
+        <TextView android:id="@+id/photosLabel" style="@style/Dessert.Text.Title" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_marginTop="14dp" />
+        <LinearLayout android:id="@+id/photosRow" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="6dp" android:orientation="horizontal" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/actionButton"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            android:minWidth="140dp"
+            app:cornerRadius="22dp" />
+
+        <!-- 버튼 글자(15sp)보다 3 작은 12sp, 회색 -->
+        <TextView
+            android:id="@+id/deleteNoteText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:minHeight="44dp"
+            android:text="테이스팅 노트 삭제하기"
+            android:textColor="@color/ink_sub"
+            android:textSize="12sp" />
+        <TextView
+            android:id="@+id/deleteText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:minHeight="44dp"
+            android:text="스티커 삭제하기"
+            android:textColor="@color/ink_sub"
+            android:textSize="12sp" />
+    </LinearLayout>
+</ScrollView>
