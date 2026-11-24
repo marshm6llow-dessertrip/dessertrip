@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 기록하기 플로우: RecordActivity 의 NavHost 최상위 그래프. 하나의 RegisterFlowViewModel 을 공유(이 그래프 범위) -->
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/register_graph"
+    app:startDestination="@id/registerEntryFragment">
+    <fragment android:id="@+id/registerEntryFragment" android:name="com.example.dessertrip.ui.archive.sticker.RegisterEntryFragment" />
+    <fragment android:id="@+id/cameraFragment" android:name="com.example.dessertrip.ui.archive.sticker.CameraFragment" />
+    <fragment android:id="@+id/galleryFragment" android:name="com.example.dessertrip.ui.archive.sticker.GalleryFragment" />
+    <fragment android:id="@+id/stickerFragment" android:name="com.example.dessertrip.ui.archive.sticker.StickerFragment" />
+    <fragment android:id="@+id/noteFragment" android:name="com.example.dessertrip.ui.archive.collect.NoteFragment">
+        <!-- 도감에서 기존 항목에 노트를 추가/수정할 때만 id 를 넘긴다 -->
+        <argument android:name="stickerId" android:defaultValue="-1L" app:argType="long" />
+    </fragment>
+    <fragment android:id="@+id/savedFragment" android:name="com.example.dessertrip.ui.archive.collect.SavedFragment" />
+</navigation>
