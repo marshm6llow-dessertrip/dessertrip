@@ -11,6 +11,10 @@ public class ApiException extends RuntimeException {
         this(errorCode, errorCode.getDefaultMessage(), List.of());
     }
 
+    public ApiException(ErrorCode errorCode, String message) {
+        this(errorCode, message, List.of());
+    }
+
     public ApiException(ErrorCode errorCode, String message, List<ErrorResponse.FieldError> errors) {
         super(message);
         this.errorCode = errorCode;
