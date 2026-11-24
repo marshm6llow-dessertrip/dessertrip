@@ -11,5 +11,10 @@
         <item name="android:fontFamily">@font/pretendard</item>
         <item name="android:statusBarColor">@color/background</item>
         <item name="android:windowLightStatusBar">true</item>
+    
+        <!-- 도감·기록하기 화면의 공용 위젯 스타일 (styles_dessert.xml) -->
+        <item name="materialButtonStyle">@style/Widget.Dessert.Button.Primary</item>
+        <item name="textInputStyle">@style/Widget.Dessert.TextInput</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.Dessert.BottomSheet</item>
     </style>
 </resources>

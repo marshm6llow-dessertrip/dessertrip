@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 모서리 24dp 공통 모양. 색은 사용하는 곳에서 android:backgroundTint 로 지정한다. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/white" />
+    <corners android:radius="24dp" />
+</shape>
