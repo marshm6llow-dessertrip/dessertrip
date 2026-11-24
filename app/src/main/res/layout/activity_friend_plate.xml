@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/screen_padding"
+        android:paddingEnd="@dimen/screen_padding"
+        android:paddingTop="60dp"
+        android:paddingBottom="40dp">
+
+        <!-- 친구 프로필 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_friend_profile"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="centerCrop"
+                android:padding="0dp"
+                android:src="@drawable/profile_sample"
+                android:contentDescription="친구 프로필 사진"
+                app:shapeAppearanceOverlay="@style/FriendProfileCircle" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_plate_title"
+                    style="@style/Text.Title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="딸기시루의 디저트 플레이트"
+                    android:textSize="20sp"
+                    android:maxLines="2" />
+
+                <TextView
+                    android:id="@+id/tv_friend_code"
+                    style="@style/Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_friend_code_outline"
+                    android:paddingStart="@dimen/space_s"
+                    android:paddingEnd="@dimen/space_s"
+                    android:paddingTop="3dp"
+                    android:paddingBottom="3dp"
+                    tools:text="친구 코드 : #41237802"
+                    android:textColor="@color/primary"
+                    android:layout_marginTop="9dp" />
+
+                <TextView
+                    android:id="@+id/tv_friend_bio"
+                    style="@style/Text.Body"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="딸기 시루 나에게로. 🍓"
+                    android:layout_marginTop="@dimen/space_s" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 레벨 및 수집 현황 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_friend_code_card"
+            android:padding="@dimen/screen_padding">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_friend_level"
+                        style="@style/Text.Body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="Lv. 3 · 초보 탐험가"
+                        android:textColor="@color/primary"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:id="@+id/tv_next_level"
+                        style="@style/Text.Body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        tools:text="다음 레벨까지 15개 디저트 기록" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_level_current"
+                    style="@style/Text.Title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="15"
+                    android:textColor="@color/primary"
+                    android:textSize="34sp" />
+
+                <TextView
+                    android:id="@+id/tv_level_max"
+                    style="@style/Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="/ 30" />
+
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/pb_friend_level"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="7dp"
+                android:layout_marginTop="@dimen/space_m"
+                tools:max="30"
+                tools:progress="15"
+                android:progressTint="@color/primary"
+                android:progressBackgroundTint="#E7D2CE" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginTop="@dimen/space_m">
+
+                <TextView
+                    android:id="@+id/tv_cake_count"
+                    style="@style/Text.Caption"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    tools:text="케이크 3" />
+
+                <TextView
+                    android:id="@+id/tv_bread_count"
+                    style="@style/Text.Caption"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    tools:text="빵 7" />
+
+                <TextView
+                    android:id="@+id/tv_baked_count"
+                    style="@style/Text.Caption"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    tools:text="구움과자 2" />
+
+                <TextView
+                    android:id="@+id/tv_etc_count"
+                    style="@style/Text.Caption"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    tools:text="기타 3" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- 접시 제목 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="44dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/Text.Subtitle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="접시 안에 쌓인 디저트" />
+
+            <TextView
+                android:id="@+id/tv_total_count"
+                style="@style/Text.Caption"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="15개 수집" />
+
+        </LinearLayout>
+
+        <!-- 둥근 디저트 접시 -->
+        <FrameLayout
+            android:id="@+id/layout_dessert_plate"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_marginTop="@dimen/space_m"
+            android:background="@drawable/bg_dessert_plate" />
+
+    </LinearLayout>
+</ScrollView>

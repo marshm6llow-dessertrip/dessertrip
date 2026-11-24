@@ -29,6 +29,18 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
-    </application>
+        <activity
+            android:name="com.example.dessertrip.ui.community.PostListActivity"/>
 
+        <activity
+            android:name="com.example.dessertrip.ui.friend.FriendAddActivity"
+            android:exported="false" />
+
+        <activity
+            android:name="com.example.dessertrip.ui.friend.StickerGiftActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.example.dessertrip.ui.friend.FriendPlateActivity"
+            android:exported="false" />
+    </application>
 </manifest>
