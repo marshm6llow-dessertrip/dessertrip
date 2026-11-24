@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- "플레이트에 스티커를 추가해요" 대화상자 (AlertDialog.setView 로 넣는다) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_round_24"
+    android:backgroundTint="@color/cream"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView style="@style/Dessert.Text.Headline" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="플레이트에 스티커를 추가해요." android:textSize="20sp" />
+    <TextView style="@style/Dessert.Text.Body" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:layout_marginTop="4dp"
+        android:text="플레이트는 모두에게 공유돼요." android:textColor="@color/ink_sub" />
+
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:gravity="end|center_vertical" android:orientation="horizontal">
+        <CheckBox android:id="@+id/checkMine" style="@style/Dessert.Text.Label" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:buttonTint="@color/rose" android:checked="true"
+            android:text="내 스티커" />
+        <CheckBox android:id="@+id/checkReceived" style="@style/Dessert.Text.Label" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:buttonTint="@color/rose" android:checked="true"
+            android:text="받은 스티커" />
+    </LinearLayout>
+
+    <FrameLayout android:layout_width="match_parent" android:layout_height="0dp" android:layout_weight="1">
+        <androidx.recyclerview.widget.RecyclerView android:id="@+id/recycler" android:layout_width="match_parent"
+            android:layout_height="match_parent" android:fadeScrollbars="false" android:scrollbars="vertical" />
+        <TextView android:id="@+id/emptyText" style="@style/Dessert.Text.Small" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_gravity="center"
+            android:text="보여 줄 스티커가 없어요." android:visibility="gone" />
+    </FrameLayout>
+
+    <com.google.android.material.button.MaterialButton android:id="@+id/applyButton"
+        android:layout_width="wrap_content" android:layout_height="52dp" android:layout_gravity="end"
+        android:layout_marginTop="12dp" android:paddingStart="24dp" android:paddingEnd="24dp"
+        android:text="적용하고 닫기" />
+</LinearLayout>
