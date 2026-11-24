@@ -21,7 +21,7 @@ android {
     buildTypes {
         debug {
             // 에뮬레이터에서 내 PC의 서버(localhost:8080)에 접속할 때는 10.0.2.2 를 쓴다
-            buildConfigField("String", "BASE_URL", "\"http://192.168.123.109:8080/\"")
+            buildConfigField("String", "BASE_URL", "\"http://10.0.2.2:8080/\"")
             manifestPlaceholders["usesCleartext"] = "true"
         }
         release {
