@@ -33,7 +33,7 @@ public class PostDetailActivity extends AppCompatActivity {
         categoryId = getIntent().getIntExtra("post_category_id", CATEGORY_FREE);
 
         if (categoryId == CATEGORY_NOTE) {
-            setContentView(R.layout.activity_tasting_note_detail);
+            setContentView(R.layout.activity_post_tasting_note_detail);
         } else {
             setContentView(R.layout.activity_post_detail);
         }
