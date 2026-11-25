@@ -3,6 +3,9 @@ package com.example.dessertrip.ui.collect;
 import com.example.dessertrip.BuildConfig;
 import android.content.Context;
 
+import com.example.dessertrip.ui.friend.data.FriendApi;
+import com.example.dessertrip.ui.friend.data.FriendRepository;
+
 import com.example.dessertrip.ui.archive.sticker.BackgroundRemover;
 import com.example.dessertrip.ui.collect.core.network.ApiErrorParser;
 import com.example.dessertrip.ui.collect.core.network.AuthInterceptor;
@@ -27,6 +30,7 @@ public class AppContainer {
     public final TokenStore tokenStore;
     public final SessionEvents sessionEvents = new SessionEvents();
     public final DessertRepository repository;
+    public final FriendRepository friendRepository;
     public final BackgroundRemover backgroundRemover;
 
     public AppContainer(Context context) {
@@ -48,15 +52,18 @@ public class AppContainer {
             http.addInterceptor(logging);
         }
 
-        DessertApi api = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .client(http.build())
                 .addConverterFactory(GsonConverterFactory.create(gson))
-                .build()
-                .create(DessertApi.class);
+                .build();
+
+        DessertApi api = retrofit.create(DessertApi.class);
+        FriendApi friendApi = retrofit.create(FriendApi.class);
 
         repository = new DessertRepository(api, parser,
                 new ImageUploader(context.getContentResolver(), parser), gson);
+        friendRepository = new FriendRepository(friendApi, parser);
         backgroundRemover = new BackgroundRemover(context);
     }
 }
