@@ -29,17 +29,11 @@ public class CommunityFragment extends Fragment {
         view.findViewById(R.id.tv_more_posts).setOnClickListener(v ->
                 startActivity(new Intent(requireContext(), PostListActivity.class)));
 
-        // 미리보기 글 클릭 → 게시글 상세 화면 (확인용)
-        view.findViewById(R.id.post_item_1).setOnClickListener(v ->
-                startActivity(new Intent(requireContext(), PostDetailActivity.class)));
-        view.findViewById(R.id.post_item_2).setOnClickListener(v ->
-                startActivity(new Intent(requireContext(), PostDetailActivity.class)));
-        view.findViewById(R.id.post_item_3).setOnClickListener(v ->
-                startActivity(new Intent(requireContext(), PostDetailActivity.class)));
-        ViewCompat.setOnApplyWindowInsetsListener(view, (v, insets) -> {
-            Insets bars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(0, bars.top, 0, 0);
-            return insets;
+        view.findViewById(R.id.post_item_1).setOnClickListener(v -> {
+            Intent i = new Intent(requireContext(), PostDetailActivity.class);
+            i.putExtra("post_id", 1);
+            i.putExtra("post_category_id", 1);
+            startActivity(i);
         });
         return view;
     }
