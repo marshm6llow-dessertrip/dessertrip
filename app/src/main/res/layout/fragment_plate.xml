@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 플레이트 화면. 뼈대는 팀의 activity_friend_plate.xml(프로필·레벨·접시)이고,
+     접시 아래의 "스티커 추가"·"돌아가기" 버튼과 로딩/오류 표시만 우리가 붙였다. -->
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background">
+
+    <ScrollView
+        android:id="@+id/scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/screen_padding"
+            android:paddingEnd="@dimen/screen_padding"
+            android:paddingTop="@dimen/screen_padding"
+            android:paddingBottom="40dp">
+
+            <!-- 친구 프로필 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_friend_profile"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:scaleType="centerCrop"
+                    android:padding="0dp"
+                    android:src="@drawable/profile_sample"
+                    android:contentDescription="친구 프로필 사진"
+                    app:shapeAppearanceOverlay="@style/FriendProfileCircle" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_plate_title"
+                        style="@style/Text.Title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="딸기시루의 디저트 플레이트"
+                        android:textSize="20sp"
+                        android:maxLines="2" />
+
+                    <TextView
+                        android:id="@+id/tv_friend_code"
+                        style="@style/Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bg_friend_code_outline"
+                        android:paddingStart="@dimen/space_s"
+                        android:paddingEnd="@dimen/space_s"
+                        android:paddingTop="3dp"
+                        android:paddingBottom="3dp"
+                        tools:text="친구 코드 : #41237802"
+                        android:textColor="@color/primary"
+                        android:layout_marginTop="9dp" />
+
+                    <TextView
+                        android:id="@+id/tv_friend_bio"
+                        style="@style/Text.Body"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="딸기 시루 나에게로. 🍓"
+                        android:layout_marginTop="@dimen/space_s" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 레벨 및 수집 현황 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="42dp"
+                android:orientation="vertical"
+                android:background="@drawable/bg_friend_code_card"
+                android:padding="@dimen/screen_padding">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tv_friend_level"
+                            style="@style/Text.Body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="Lv. 3 · 초보 탐험가"
+                            android:textColor="@color/primary"
+                            android:textSize="16sp" />
+
+                        <TextView
+                            android:id="@+id/tv_next_level"
+                            style="@style/Text.Body"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            tools:text="다음 레벨까지 15개 디저트 기록" />
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_level_current"
+                        style="@style/Text.Title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="15"
+                        android:textColor="@color/primary"
+                        android:textSize="34sp" />
+
+                    <TextView
+                        android:id="@+id/tv_level_max"
+                        style="@style/Text.Caption"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="/ 30" />
+
+                </LinearLayout>
+
+                <ProgressBar
+                    android:id="@+id/pb_friend_level"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="7dp"
+                    android:layout_marginTop="@dimen/space_m"
+                    tools:max="30"
+                    tools:progress="15"
+                    android:progressTint="@color/primary"
+                    android:progressBackgroundTint="#E7D2CE" />
+
+                <!-- 가장 많이 기록한 카테고리 3개 (많은 순서대로 왼쪽부터. 도감 레벨 카드와 같은 규칙) -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="@dimen/space_m">
+
+                    <TextView
+                        android:id="@+id/tv_top_category_1"
+                        style="@style/Text.Caption"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        tools:text="케이크 3" />
+
+                    <TextView
+                        android:id="@+id/tv_top_category_2"
+                        style="@style/Text.Caption"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        tools:text="빵 7" />
+
+                    <TextView
+                        android:id="@+id/tv_top_category_3"
+                        style="@style/Text.Caption"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        tools:text="구움과자 2" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- (우리 기능) 디저트 종류별로 보기: 접시 위 스티커를 카테고리로 걸러 본다 -->
+            <include
+                android:id="@+id/chips"
+                layout="@layout/include_category_chips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_m" />
+
+            <!-- 접시 제목 -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="44dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <TextView
+                    style="@style/Text.Subtitle"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:text="접시 안에 쌓인 디저트" />
+
+                <TextView
+                    android:id="@+id/tv_total_count"
+                    style="@style/Text.Caption"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="15개 수집" />
+
+            </LinearLayout>
+
+            <!-- 둥근 디저트 접시 -->
+            <FrameLayout
+                android:id="@+id/layout_dessert_plate"
+                android:layout_width="match_parent"
+                android:layout_height="350dp"
+                android:layout_marginTop="@dimen/space_m"
+                android:background="@drawable/bg_dessert_plate" />
+
+            <!-- ===== 여기부터 우리 기능 ===== -->
+            <TextView
+                android:id="@+id/addStickerButton"
+                style="@style/Text.Body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/space_m"
+                android:background="@drawable/bg_friend_code_outline"
+                android:drawableEnd="@drawable/ic_add"
+                android:drawablePadding="6dp"
+                android:drawableTint="@color/primary"
+                android:gravity="center_vertical"
+                android:includeFontPadding="false"
+                android:paddingStart="14dp"
+                android:paddingTop="10dp"
+                android:paddingEnd="14dp"
+                android:paddingBottom="10dp"
+                android:text="접시 안에 더 쌓아보세요"
+                android:textColor="@color/primary"
+                android:textStyle="bold" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/backButton"
+                style="@style/Widget.Dessert.Button.Outline"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginTop="@dimen/space_l"
+                android:text="도감 페이지로 돌아가기" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <ProgressBar
+        android:id="@+id/loadingSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/primary" />
+
+    <LinearLayout
+        android:id="@+id/errorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="32dp"
+        android:visibility="gone">
+        <TextView android:id="@+id/errorText" style="@style/Text.Caption" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:gravity="center" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/retryButton"
+            style="@style/Widget.Dessert.Button.Outline"
+            android:layout_width="140dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="12dp"
+            android:text="다시 시도" />
+    </LinearLayout>
+</FrameLayout>

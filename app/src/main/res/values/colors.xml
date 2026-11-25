@@ -10,4 +10,19 @@
     <color name="stroke">#E6DFD3</color>
     <color name="map_green">#DCE6CF</color>
     <color name="white">#FFFFFF</color>
+
+    <!-- 도감·기록하기 화면에서 사용하는 색 (팀 색과 비슷한 값은 추후 통합 논의) -->
+    <color name="cream">#FAF6EE</color>
+    <color name="cream_dark">#F1EADD</color>
+    <color name="sticker_empty_bg">#8B8078</color>   <!-- 테이스팅 노트가 아직 없는 스티커 카드 배경 -->
+    <color name="rose">#D14B5A</color>
+    <color name="blush">#FCE4E8</color>
+    <color name="ink">#2B2320</color>
+    <color name="ink_sub">#8A7F78</color>
+    <color name="line">#E8DFD2</color>
+    <color name="gold">#E9B949</color>
+    <color name="received_stroke">#22BBD3</color>   <!-- 받은 스티커 테두리 -->
+    <color name="black">#000000</color>
+    <color name="scrim">#66000000</color>
+    <color name="map_bg">#EDE6D8</color>
 </resources>

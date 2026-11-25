@@ -1,6 +1,3 @@
-/*파일 업로드(multipart)를 쓰는 기능이 생기면 
-MaxUploadSizeExceededException, MissingServletRequestPartException 핸들러와
- 이미지 관련 오류 코드를 그 기능 브랜치에서 추가합니다. */
 package com.dessertrip.dessertrip_backend.common;
 
 import org.slf4j.Logger;
@@ -17,6 +14,8 @@ import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.multipart.support.MissingServletRequestPartException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.util.ArrayList;
@@ -47,6 +46,19 @@ public class GlobalExceptionHandler {
         log.debug("읽을 수 없는 요청 본문: {}", e.getMessage());
         return toResponse(ErrorCode.INVALID_JSON, ErrorCode.INVALID_JSON.getDefaultMessage(),
                 List.of(new ErrorResponse.FieldError("body", "JSON 형식 또는 값의 형식이 올바르지 않습니다.")));
+    }
+
+    /** multipart 의 필수 파트(예: photos)가 빠졌을 때 */
+    @ExceptionHandler(MissingServletRequestPartException.class)
+    public ResponseEntity<ErrorResponse> handleMissingPart(MissingServletRequestPartException e) {
+        return toResponse(ErrorCode.VALIDATION_FAILED, ErrorCode.VALIDATION_FAILED.getDefaultMessage(),
+                List.of(new ErrorResponse.FieldError(e.getRequestPartName(), "필수 입력값입니다.")));
+    }
+
+    /** spring.servlet.multipart 한계(서버 한계선)를 넘는 업로드 */
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<ErrorResponse> handleTooLarge(MaxUploadSizeExceededException e) {
+        return toResponse(ErrorCode.PAYLOAD_TOO_LARGE, ErrorCode.PAYLOAD_TOO_LARGE.getDefaultMessage(), List.of());
     }
 
     @ExceptionHandler(MissingServletRequestParameterException.class)
