@@ -9,4 +9,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     /** 로그인 연동 전까지의 "현재 사용자": 가장 먼저 만들어진 유저 */
     Optional<User> findFirstByOrderByIdAsc();
+    Optional<User> findByFriendCode(String friendCode);
 }
