@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 커뮤니티 공유 토글: 켜짐(오른쪽) = 로즈, 꺼짐(왼쪽) = 회색 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="@color/rose" android:state_checked="true" />
+    <item android:color="#CFC6BD" />
+</selector>

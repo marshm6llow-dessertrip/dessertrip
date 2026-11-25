@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 스티커 선택 카드: 배경색(선택됨/아님)과 테두리 색(내 스티커/받은 스티커)은 코드에서 지정 -->
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    android:clickable="true"
+    android:focusable="true"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="0dp"
+    app:strokeWidth="2dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <com.example.dessertrip.ui.collect.common.AspectFrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_round_12"
+            android:backgroundTint="@color/white"
+            app:aspect="0.6">
+            <ImageView android:id="@+id/image" android:layout_width="match_parent" android:layout_height="match_parent"
+                android:contentDescription="디저트 스티커" android:padding="8dp" android:scaleType="fitCenter" />
+        </com.example.dessertrip.ui.collect.common.AspectFrameLayout>
+
+        <TextView android:id="@+id/name" style="@style/Dessert.Text.Label" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="8dp" android:ellipsize="end"
+            android:maxLines="1" android:textSize="13sp" />
+        <TextView android:id="@+id/sub" style="@style/Dessert.Text.Small" android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:layout_marginTop="2dp" android:ellipsize="end"
+            android:maxLines="1" android:textSize="10sp" />
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

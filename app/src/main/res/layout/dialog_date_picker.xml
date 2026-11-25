@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 날짜 선택 대화상자용 레이아웃 (스피너 모드 데이트피커) -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <DatePicker
+        android:id="@+id/dlgDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="spinner" />
+</LinearLayout>
