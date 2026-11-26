@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendDeleteResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import com.dessertrip.dessertrip_backend.dto.friend.PublicPlateResponse;
+import com.dessertrip.dessertrip_backend.service.friend.PublicPlateService;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -22,9 +24,14 @@ import com.dessertrip.dessertrip_backend.dto.friend.FriendCodeSearchResponse;
 public class FriendController {
 
     private final FriendService friendService;
+    private final PublicPlateService publicPlateService;
 
-    public FriendController(FriendService friendService) {
+    public FriendController(
+            FriendService friendService,
+            PublicPlateService publicPlateService) {
+
         this.friendService = friendService;
+        this.publicPlateService = publicPlateService;
     }
 
     @PostMapping("/me/friend-requests")
@@ -66,6 +73,17 @@ public class FriendController {
     ) {
         return ResponseEntity.ok(
                 friendService.deleteFriend(friendId)
+        );
+    }
+    /** 다른 사용자의 공개 플레이트 조회 */
+    @GetMapping("/{userId}/plate")
+    public ResponseEntity<PublicPlateResponse> getPublicPlate(
+            @PathVariable("userId") Integer userId,
+            @RequestParam(name = "category_id", required = false)
+            Integer categoryId) {
+
+        return ResponseEntity.ok(
+                publicPlateService.getPublicPlate(userId, categoryId)
         );
     }
 }
