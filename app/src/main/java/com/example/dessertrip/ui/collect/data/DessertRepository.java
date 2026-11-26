@@ -80,6 +80,9 @@ public class DessertRepository {
         i.stickerUrl = c.stickerImgUrl;
         i.category = c.dessertCategoryName;
         i.placeName = c.cafeName;
+        i.placeId = c.cafeId == null ? null : String.valueOf(c.cafeId);
+        i.latitude = c.latitude;
+        i.longitude = c.longitude;
         i.hasTastingNote = c.hasTastingNote;
         return i;
     }

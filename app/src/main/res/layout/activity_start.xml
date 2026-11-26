@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FBF8F3"
+    android:fillViewport="true"
+    android:fitsSystemWindows="true"
+    tools:context=".ui.auth.StartActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="32dp"
+        android:paddingBottom="24dp">
+
+        <!-- 로고 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="디저트립."
+            android:textColor="#BD5A5C"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <!-- 헤드라인 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:lineSpacingExtra="6dp"
+            android:text="좋아하는 디저트를,\n차곡차곡."
+            android:textColor="#2B2523"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:lineSpacingExtra="4dp"
+            android:text="발견하고, 맛보고, 나만의 스티커로.\n당신의 달콤한 취향을 모아보세요."
+            android:textColor="#7A716B"
+            android:textSize="13sp" />
+
+        <!-- 디저트 카드 -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="8dp"
+            android:layout_marginTop="28dp"
+            android:layout_weight="1"
+            android:clipChildren="false"
+            android:minHeight="280dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/bg_dessert_card"
+                android:rotation="-2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="18dp"
+                    android:layout_marginTop="24dp"
+                    android:fontFamily="serif"
+                    android:text="my little dessert archive"
+                    android:textColor="#7A716B"
+                    android:textSize="12sp"
+                    android:textStyle="italic" />
+
+                <!-- TODO: 디저트 이미지 추가 후 src 교체 -->
+                <ImageView
+                    android:id="@+id/ivDessert"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="24dp"
+                    android:contentDescription="디저트 이미지"
+                    android:scaleType="fitCenter" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="top|end"
+                    android:layout_margin="16dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_heart" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|start"
+                android:layout_marginStart="4dp"
+                android:layout_marginBottom="4dp"
+                android:background="@drawable/bg_sticker"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="5dp"
+                android:rotation="-4"
+                android:text="오늘의 스티커 수집 완료 ♡"
+                android:textColor="#B5484B"
+                android:textSize="11sp" />
+        </FrameLayout>
+
+        <Button
+            android:id="@+id/btnLogin"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@android:color/white"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text="로그인"
+            android:textColor="#2B2523"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:cornerRadius="28dp"
+            app:strokeColor="#D9D1C8"
+            app:strokeWidth="1.5dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvFindAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:padding="8dp"
+                android:text="계정 찾기"
+                android:textColor="#2B2523"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="14dp"
+                android:layout_marginHorizontal="8dp"
+                android:background="#D9D1C8" />
+
+            <TextView
+                android:id="@+id/tvSignUp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:padding="8dp"
+                android:text="회원가입"
+                android:textColor="#2B2523"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:gravity="center"
+            android:text="시작하면 이용약관 및 개인정보 처리방침에 동의하게 됩니다."
+            android:textColor="#7A716B"
+            android:textSize="10sp" />
+    </LinearLayout>
+</ScrollView>
