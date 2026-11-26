@@ -49,18 +49,23 @@
 
         <!-- 검색창 -->
         <EditText
+            android:id="@+id/explore_search"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_explore_pill"
             android:drawableStart="@android:drawable/ic_menu_search"
             android:drawablePadding="8dp"
-            android:hint="어떤 동네의 디저트를 찾아볼까요?"
-            android:imeOptions="actionSearch"
+            android:hint="지역, 카페 이름, 디저트를 검색해보세요"
             android:inputType="text"
+            android:imeOptions="actionSearch"
+            android:singleLine="true"
+            android:enabled="true"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:paddingStart="14dp"
             android:paddingEnd="14dp"
-            android:singleLine="true"
             android:textColor="#302B27"
             android:textColorHint="#8A7D73"
             android:textSize="14sp" />
@@ -98,58 +103,24 @@
                 android:scrollbars="none">
 
                 <LinearLayout
+                    android:id="@+id/category_box"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:background="@drawable/bg_explore_pill"
-                        android:backgroundTint="#CB4B55"
-                        android:gravity="center"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:text="전체"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_explore_pill"
-                        android:gravity="center"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:text="케이크"
-                        android:textColor="#8A7D73" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_explore_pill"
-                        android:gravity="center"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:text="소금빵"
-                        android:textColor="#8A7D73" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="36dp"
-                        android:layout_marginStart="8dp"
-                        android:background="@drawable/bg_explore_pill"
-                        android:gravity="center"
-                        android:paddingStart="14dp"
-                        android:paddingEnd="14dp"
-                        android:text="까눌레"
-                        android:textColor="#8A7D73" />
-                </LinearLayout>
+                    android:orientation="horizontal" />
             </HorizontalScrollView>
         </LinearLayout>
     </LinearLayout>
+
+    <!-- 검색 결과 개수 -->
+    <TextView
+        android:id="@+id/explore_result_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="검색 결과 0개"
+        android:textColor="#302B27"
+        android:textSize="14sp"
+        android:textStyle="bold" />
 
     <!-- 지도 뷰 -->
     <FrameLayout
@@ -164,12 +135,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
+        <!-- 연관 검색어 목록 -->
+        <LinearLayout
+            android:id="@+id/explore_suggestions"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="@drawable/bg_explore_pill"
+            android:elevation="10dp"
+            android:orientation="vertical"
+            android:visibility="gone" />
+
         <TextView
             android:id="@+id/search_this_area"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="36dp"
+            android:layout_marginBottom="132dp"
             android:background="@drawable/bg_explore_pill"
             android:clickable="true"
             android:elevation="3dp"
@@ -187,7 +169,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_marginEnd="8dp"
-            android:layout_marginBottom="32dp"
+            android:layout_marginBottom="128dp"
             android:background="@drawable/bg_explore_pill"
             android:elevation="3dp"
             android:orientation="vertical">
@@ -218,56 +200,85 @@
                 android:textColor="#302B27"
                 android:textSize="24sp" />
         </LinearLayout>
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="4dp">
 
         <ImageView
-            android:id="@+id/cafe_photo"
-            android:layout_width="84dp"
-            android:layout_height="84dp"
-            android:background="@drawable/bg_explore_pill"
-            android:clipToOutline="true"
-            android:importantForAccessibility="no"
-            android:scaleType="centerCrop" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@+id/cafe_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textColor="#302B27"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/cafe_menu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:textColor="#8A7D73"
-                android:textSize="14sp" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="32dp"
+            android:id="@+id/map_my_location"
+            android:layout_width="48dp"
             android:layout_height="48dp"
-            android:gravity="center"
-            android:importantForAccessibility="no"
-            android:text="›"
-            android:textColor="#302B27"
-            android:textSize="26sp" />
-    </LinearLayout>
+            android:layout_gravity="bottom|end"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="232dp"
+            android:background="@drawable/bg_explore_pill"
+            android:contentDescription="내 위치로 이동"
+            android:elevation="3dp"
+            android:padding="12dp"
+            android:src="@android:drawable/ic_menu_mylocation"
+            app:tint="#302B27" />
+
+        <!-- 하단 카페 카드 -->
+        <LinearLayout
+            android:id="@+id/explore_cafe_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:layout_margin="12dp"
+            android:background="@drawable/bg_explore_pill"
+            android:elevation="8dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:padding="8dp">
+
+            <!-- 카페 사진 -->
+            <FrameLayout
+                android:layout_width="84dp"
+                android:layout_height="84dp"
+                android:background="@drawable/bg_explore_card_photo_border">
+
+                <ImageView
+                    android:id="@+id/cafe_photo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="3dp"
+                    android:background="@drawable/bg_explore_card_photo_inner"
+                    android:clipToOutline="true"
+                    android:importantForAccessibility="no"
+                    android:scaleType="fitCenter" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/cafe_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="#302B27"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/cafe_menu"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:textColor="#8A7D73"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="32dp"
+                android:layout_height="48dp"
+                android:gravity="center"
+                android:importantForAccessibility="no"
+                android:text="›"
+                android:textColor="#302B27"
+                android:textSize="26sp" />
+        </LinearLayout>
+    </FrameLayout>
 </LinearLayout>
