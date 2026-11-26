@@ -12,6 +12,7 @@ import com.dessertrip.dessertrip_backend.dto.friend.FriendDeleteResponse;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import com.dessertrip.dessertrip_backend.dto.friend.PublicPlateResponse;
 import com.dessertrip.dessertrip_backend.service.friend.PublicPlateService;
+import com.dessertrip.dessertrip_backend.dto.friend.UserSearchResponse;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -86,4 +87,15 @@ public class FriendController {
                 publicPlateService.getPublicPlate(userId, categoryId)
         );
     }
+
+
+    @GetMapping("/search")
+    public ResponseEntity<UserSearchResponse> searchByNickname(
+            @RequestParam("keyword") String keyword
+    ) {
+        return ResponseEntity.ok(
+                friendService.searchByNickname(keyword)
+        );
+    }
+
 }

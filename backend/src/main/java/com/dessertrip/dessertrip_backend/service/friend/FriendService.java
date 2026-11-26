@@ -19,6 +19,8 @@ import com.dessertrip.dessertrip_backend.entity.friend.Friend;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendListItemResponse;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendListResponse;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendDeleteResponse;
+import com.dessertrip.dessertrip_backend.dto.friend.UserSearchItemResponse;
+import com.dessertrip.dessertrip_backend.dto.friend.UserSearchResponse;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -280,4 +282,39 @@ public class FriendService {
                 "친구 관계가 해제되었습니다."
         );
     }
+
+    @Transactional(readOnly = true)
+    public UserSearchResponse searchByNickname(String keyword) {
+
+        // 1. 검색어 검증
+        if (keyword == null || keyword.isBlank()) {
+            throw new ApiException(
+                    ErrorCode.VALIDATION_FAILED,
+                    "검색어를 입력해 주세요."
+            );
+        }
+
+        // 2. 현재 사용자 조회
+        User currentUser = currentUserService.get();
+
+        // 3. 닉네임 부분 일치 검색 (자기 자신 제외)
+        List<User> users = userRepository
+                .findByNameContainingAndIdNotOrderByNameAsc(
+                        keyword.trim(),
+                        currentUser.getId()
+                );
+
+        // 4. 검색 결과를 응답 DTO로 변환
+        List<UserSearchItemResponse> results = users.stream()
+                .map(user -> new UserSearchItemResponse(
+                        user.getId(),
+                        user.getName(),
+                        user.getProfileImgUrl()
+                ))
+                .toList();
+
+        // 5. 응답 반환
+        return new UserSearchResponse(results);
+    }
+
 }
