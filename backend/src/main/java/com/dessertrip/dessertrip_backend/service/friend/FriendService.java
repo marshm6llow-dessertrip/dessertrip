@@ -13,6 +13,9 @@ import com.dessertrip.dessertrip_backend.repository.friend.FriendRepository;
 import com.dessertrip.dessertrip_backend.repository.friend.FriendRequestRepository;
 import com.dessertrip.dessertrip_backend.service.collect.CurrentUserService;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendCodeSearchResponse;
+import com.dessertrip.dessertrip_backend.dto.friend.FriendRequestUpdateRequest;
+import com.dessertrip.dessertrip_backend.dto.friend.FriendRequestUpdateResponse;
+import com.dessertrip.dessertrip_backend.entity.friend.Friend;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -133,6 +136,84 @@ public class FriendService {
                 targetUser.getFriendCode(),
                 targetUser.getDescription(),
                 targetUser.getProfileImgUrl()
+        );
+    }
+    @Transactional
+    public FriendRequestUpdateResponse updateFriendRequest(
+            Integer requestId,
+            FriendRequestUpdateRequest request
+    ) {
+        User currentUser = currentUserService.get();
+
+        // 1. 허용된 요청 상태인지 확인
+        if (request.status() != FriendRequestStatus.ACCEPTED
+                && request.status() != FriendRequestStatus.REJECTED) {
+            throw new ApiException(
+                    ErrorCode.VALIDATION_FAILED,
+                    "수락 또는 거절만 가능합니다."
+            );
+        }
+
+        // 2. 친구 요청 조회
+        FriendRequest friendRequest = friendRequestRepository.findById(requestId)
+                .orElseThrow(() -> new ApiException(
+                        ErrorCode.NOT_FOUND,
+                        "해당 친구 요청을 찾을 수 없습니다."
+                ));
+
+        // 3. 요청을 받은 사용자 본인인지 확인
+        if (!friendRequest.getReceiver().getId().equals(currentUser.getId())) {
+            throw new ApiException(
+                    ErrorCode.FORBIDDEN,
+                    "해당 친구 요청을 처리할 권한이 없습니다."
+            );
+        }
+
+        // 4. 이미 처리된 요청인지 확인
+        if (friendRequest.getStatus() != FriendRequestStatus.PENDING) {
+            throw new ApiException(
+                    ErrorCode.VALIDATION_FAILED,
+                    "이미 처리된 친구 요청입니다."
+            );
+        }
+
+        User sender = friendRequest.getSender();
+        User receiver = friendRequest.getReceiver();
+
+        // 5. 수락 또는 거절 처리
+        if (request.status() == FriendRequestStatus.ACCEPTED) {
+
+            // 이미 친구 관계가 존재하는지 확인
+            if (friendRepository.findFriendship(
+                    sender.getId(), receiver.getId()).isPresent()) {
+                throw new ApiException(
+                        ErrorCode.VALIDATION_FAILED,
+                        "이미 친구로 등록된 사용자입니다."
+                );
+            }
+
+            // 친구 관계 생성
+            friendRepository.save(new Friend(sender, receiver));
+
+            // 요청 상태 변경
+            friendRequest.accept();
+
+        } else {
+
+            // 요청 거절
+            friendRequest.reject();
+        }
+
+        // 6. 변경 사항 DB 반영
+        FriendRequest saved = friendRequestRepository.saveAndFlush(friendRequest);
+
+        // 7. 응답 반환
+        return new FriendRequestUpdateResponse(
+                saved.getId(),
+                saved.getStatus(),
+                sender.getId(),
+                saved.getStatus() == FriendRequestStatus.ACCEPTED,
+                saved.getUpdatedAt()
         );
     }
 }
