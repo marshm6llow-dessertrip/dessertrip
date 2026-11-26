@@ -16,7 +16,10 @@ import com.dessertrip.dessertrip_backend.dto.friend.FriendCodeSearchResponse;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendRequestUpdateRequest;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendRequestUpdateResponse;
 import com.dessertrip.dessertrip_backend.entity.friend.Friend;
+import com.dessertrip.dessertrip_backend.dto.friend.FriendListItemResponse;
+import com.dessertrip.dessertrip_backend.dto.friend.FriendListResponse;
 
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -215,5 +218,33 @@ public class FriendService {
                 saved.getStatus() == FriendRequestStatus.ACCEPTED,
                 saved.getUpdatedAt()
         );
+    }
+
+    @Transactional(readOnly = true)
+    public FriendListResponse getFriends() {
+        User currentUser = currentUserService.get();
+
+        List<Friend> friendships =
+                friendRepository.findAllByUserId(currentUser.getId());
+
+        List<FriendListItemResponse> friends = friendships.stream()
+                .map(friendship -> {
+                    User friendUser;
+
+                    if (friendship.getUser().getId().equals(currentUser.getId())) {
+                        friendUser = friendship.getFriendUser();
+                    } else {
+                        friendUser = friendship.getUser();
+                    }
+
+                    return new FriendListItemResponse(
+                            friendUser.getId(),
+                            friendUser.getName(),
+                            friendUser.getProfileImgUrl()
+                    );
+                })
+                .toList();
+
+        return new FriendListResponse(friends);
     }
 }

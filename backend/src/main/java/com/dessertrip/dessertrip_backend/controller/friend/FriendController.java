@@ -3,6 +3,7 @@ package com.dessertrip.dessertrip_backend.controller.friend;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendRequestCreateRequest;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendRequestCreateResponse;
 import com.dessertrip.dessertrip_backend.service.friend.FriendService;
+import com.dessertrip.dessertrip_backend.dto.friend.FriendListResponse;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendRequestUpdateRequest;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendRequestUpdateResponse;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -51,5 +52,9 @@ public class FriendController {
         return ResponseEntity.ok(
                 friendService.updateFriendRequest(requestId, request)
         );
+    }
+    @GetMapping("/me/friends")
+    public ResponseEntity<FriendListResponse> getFriends() {
+        return ResponseEntity.ok(friendService.getFriends());
     }
 }
