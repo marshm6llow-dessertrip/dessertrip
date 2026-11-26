@@ -42,22 +42,9 @@
             android:textSize="22sp" />
     </LinearLayout>
 
-    <ScrollView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_post_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            android:id="@+id/layout_post_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <include layout="@layout/item_post" />
-            <include layout="@layout/item_post" />
-            <include layout="@layout/item_post" />
-            <include layout="@layout/item_post" />
-            <include layout="@layout/item_post" />
-            <include layout="@layout/item_post" />
-        </LinearLayout>
-    </ScrollView>
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 </LinearLayout>
