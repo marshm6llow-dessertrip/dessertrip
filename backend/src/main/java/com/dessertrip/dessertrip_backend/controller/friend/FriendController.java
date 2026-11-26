@@ -8,6 +8,8 @@ import com.dessertrip.dessertrip_backend.dto.friend.FriendRequestUpdateRequest;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendRequestUpdateResponse;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import com.dessertrip.dessertrip_backend.dto.friend.FriendDeleteResponse;
+import org.springframework.web.bind.annotation.DeleteMapping;
 
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -56,5 +58,14 @@ public class FriendController {
     @GetMapping("/me/friends")
     public ResponseEntity<FriendListResponse> getFriends() {
         return ResponseEntity.ok(friendService.getFriends());
+    }
+
+    @DeleteMapping("/me/friends/{friendId}")
+    public ResponseEntity<FriendDeleteResponse> deleteFriend(
+            @PathVariable("friendId") Integer friendId
+    ) {
+        return ResponseEntity.ok(
+                friendService.deleteFriend(friendId)
+        );
     }
 }

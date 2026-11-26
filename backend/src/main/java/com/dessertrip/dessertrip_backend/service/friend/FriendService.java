@@ -18,6 +18,7 @@ import com.dessertrip.dessertrip_backend.dto.friend.FriendRequestUpdateResponse;
 import com.dessertrip.dessertrip_backend.entity.friend.Friend;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendListItemResponse;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendListResponse;
+import com.dessertrip.dessertrip_backend.dto.friend.FriendDeleteResponse;
 
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -246,5 +247,37 @@ public class FriendService {
                 .toList();
 
         return new FriendListResponse(friends);
+    }
+    @Transactional
+    public FriendDeleteResponse deleteFriend(Integer friendId) {
+        User currentUser = currentUserService.get();
+
+        if (currentUser.getId().equals(friendId)) {
+            throw new ApiException(
+                    ErrorCode.VALIDATION_FAILED,
+                    "자기 자신과의 친구 관계는 해제할 수 없습니다."
+            );
+        }
+
+        Friend friendship = friendRepository
+                .findFriendship(currentUser.getId(), friendId)
+                .orElseThrow(() -> new ApiException(
+                        ErrorCode.NOT_FOUND,
+                        "해당 친구 관계를 찾을 수 없습니다."
+                ));
+
+        friendRepository.delete(friendship);
+        friendRepository.flush();
+
+        long friendCount = friendRepository
+                .findAllByUserId(currentUser.getId())
+                .size();
+
+        return new FriendDeleteResponse(
+                friendId,
+                false,
+                friendCount,
+                "친구 관계가 해제되었습니다."
+        );
     }
 }
