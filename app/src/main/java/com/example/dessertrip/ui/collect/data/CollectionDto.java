@@ -16,6 +16,9 @@ public class CollectionDto {
         @SerializedName("dessert_category_id") public Integer dessertCategoryId;
         @SerializedName("sticker_img_url") public String stickerImgUrl;
         @SerializedName("cafe_name") public String cafeName;
+        @SerializedName("cafe_id") public Long cafeId;
+        @SerializedName("latitude") public Double latitude;
+        @SerializedName("longitude") public Double longitude;
         @SerializedName("acquisition_type") public String acquisitionType;   // DIRECT | GIFT
         @SerializedName("created_at") public String createdAt;
         // ---- [확장] ----

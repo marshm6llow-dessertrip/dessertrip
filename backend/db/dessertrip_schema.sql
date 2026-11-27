@@ -1,10 +1,13 @@
 -- ==========================================================================
--- 디저트립 테이블 생성 스크립트 (테이블 명세서 1차 수정본 기준, MySQL 8.x)
+-- 디저트립 테이블 생성 스크립트 (테이블 명세서 4차 수정본(2026.11.26) 기준, MySQL 8.x)
 -- - 접속 계정/비밀번호는 이 파일에 적지 않는다. 계정은 팀 DB 안내 문서대로 만든다.
 -- - 모든 테이블 공통: id(PK, AUTO_INCREMENT), created_at, updated_at, deleted_at(논리 삭제)
 -- - DB 이름은 팀 설정 기본값(DB_NAME=dessertrip)에 맞췄다
 -- - 논리 삭제(deleted_at)를 쓰는 테이블: 삭제해도 행이 남는다. 이메일/닉네임/친구 코드는 active_flag 와 함께 UNIQUE 라서 삭제 후 같은 값으로 다시 쓸 수 있다.
 -- - 실제 삭제(DELETE)를 쓰는 테이블: plate_sticker, post_like, comment_like, post_mark, cafe_mark
+-- - notification: 일반 알림은 논리 삭제(deleted_at)를 쓰지만, notification_type 이 'FRIEND_REQUEST' 인 알림은 친구 요청을 수락/거절/취소할 때 실제 삭제(DELETE)한다.
+--   (거절한 뒤 같은 사용자가 다시 요청을 보냈을 때, 남아 있던 이전 알림이 새 PENDING 요청으로 이어지는 문제를 막기 위해서다)
+--   알림 유형을 세분화해서(FRIEND_REQUEST / STICKER_REQUEST / STICKER_SHARE ...) 같은 보낸 사람의 다른 알림이 함께 지워지지 않게 한다.
 -- ==========================================================================
 CREATE DATABASE IF NOT EXISTS dessertrip CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE dessertrip;
@@ -181,6 +184,7 @@ CREATE TABLE IF NOT EXISTS `sticker_share` (
     `sender_id` INT NOT NULL COMMENT '스티커를 보내는 사용자',
     `receiver_id` INT NOT NULL COMMENT '스티커를 받는 사용자',
     `sticker_id` INT NOT NULL COMMENT '보내는 스티커 id',
+    `sticker_send_message` VARCHAR(2048) NULL COMMENT '스티커 공유 요청 시의 메시지',
     `share_status` VARCHAR(255) NOT NULL COMMENT 'PENDING / ACCEPTED / REJECTED',
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 시각',
     `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '업데이트 시각',
@@ -198,6 +202,7 @@ CREATE TABLE IF NOT EXISTS `sticker_request` (
     `requester_id` INT NOT NULL COMMENT '공유를 요청한 사용자',
     `request_receiver_id` INT NOT NULL COMMENT '공유 요청을 받은 사용자',
     `sticker_id` INT NOT NULL COMMENT '공유 요청 스티커 id',
+    `sticker_request_message` VARCHAR(2048) NULL COMMENT '스티커 공유 요청 시의 메시지',
     `request_status` VARCHAR(255) NOT NULL COMMENT 'PENDING / ACCEPTED / REJECTED',
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 시각',
     `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '업데이트 시각',
@@ -413,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `notification` (
     `id` INT NOT NULL AUTO_INCREMENT COMMENT '데이터 고유 식별자',
     `user_id` INT NOT NULL COMMENT '알림을 받는 유저',
     `sender_id` INT NULL COMMENT '알림을 보낸 사용자 (시스템이면 NULL)',
-    `notification_type` VARCHAR(255) NULL COMMENT '알림 유형 (USER, SYSTEM, LIKE 등)',
+    `notification_type` VARCHAR(255) NULL COMMENT '알림 유형 (FRIEND_REQUEST, STICKER_REQUEST, STICKER_SHARE, SYSTEM, LIKE 등). FRIEND_REQUEST 는 실제 삭제, 그 외는 논리 삭제',
     `notification_text` VARCHAR(2048) NOT NULL COMMENT '알림 본문',
     `is_read` BOOLEAN NOT NULL DEFAULT FALSE COMMENT '유저가 확인했는지 여부',
     `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '생성 시각',

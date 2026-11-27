@@ -16,6 +16,8 @@ public class ArchiveItemDto {
     public String category;
     public String placeId;
     public String placeName;
+    public Double latitude;
+    public Double longitude;
     public Float rating;
     public String note;
     public List<String> tags = new ArrayList<>();
