@@ -2,188 +2,180 @@ package com.example.dessertrip.ui.friend;
 
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.dessertrip.R;
-
-import java.util.ArrayList;
-import java.util.List;
-import android.widget.ProgressBar;
-import java.util.Random;
-import android.view.View;
-import android.view.Gravity;
-import android.widget.TextView;
 import androidx.core.content.ContextCompat;
 import androidx.core.content.res.ResourcesCompat;
 
+import com.bumptech.glide.Glide;
+import com.example.dessertrip.R;
+import com.example.dessertrip.ui.collect.DessertApplication;
+import com.example.dessertrip.ui.collect.core.network.ApiCallback;
+import com.example.dessertrip.ui.collect.core.network.ApiError;
+import com.example.dessertrip.ui.friend.data.PublicPlateDto;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+
 public class FriendPlateActivity extends AppCompatActivity {
 
+    public static final String EXTRA_USER_ID = "user_id";
+
     private FrameLayout dessertPlate;
-    private final List<DessertSticker> dessertStickers = new ArrayList<>();
-    private final Random random = new Random();
+
+    private final List<PublicPlateDto.StickerItem> dessertStickers =
+            new ArrayList<>();
 
     private View activeStickerLabel;
     private ImageView selectedStickerImage;
 
-    //TODO: 친구 플레이트 API 연동 시 테스트용 데이터 제거
-    private static final String TEST_FRIEND_NICKNAME = "딸기시루";
-    private static final String TEST_FRIEND_CODE = "#41237802";
-    private static final String TEST_FRIEND_BIO = "딸기 시루 나에게로. 🍓";
+    private Call<PublicPlateDto> plateCall;
 
-    // 테스트용 레벨 데이터
-    private static final int TEST_FRIEND_LEVEL = 3;
-    private static final String TEST_LEVEL_TITLE = "초보 탐험가";
-    private static final int TEST_NEXT_LEVEL_TARGET = 30;
-
-    // 테스트용 카테고리별 수집 데이터
-    private static final int TEST_CAKE_COUNT = 8;
-    private static final int TEST_BREAD_COUNT = 7;
-    private static final int TEST_BAKED_COUNT = 2;
-    private static final int TEST_ETC_COUNT = 3;
-
+    private String friendNickname = "";
+    private boolean plateLoaded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_friend_plate);
 
-        // 친구 플레이트 데이터 적용
-        bindPlateData();
-
         dessertPlate = findViewById(R.id.layout_dessert_plate);
+
         dessertPlate.setOnClickListener(v ->
                 removeStickerLabel());
 
+        dessertPlate.addOnLayoutChangeListener(
+                (v, l, t, r, b, oldL, oldT, oldR, oldB) -> {
+                    if (r - l != oldR - oldL
+                            || b - t != oldB - oldT) {
+                        renderDessertStickers();
+                    }
+                }
+        );
 
-        loadSampleStickers();
-        // 접시의 크기가 결정된 후 랜덤 배치
-        dessertPlate.post(this::renderDessertStickers);
+        int userId = getIntent().getIntExtra(EXTRA_USER_ID, -1);
+
+        if (userId <= 0) {
+            showToast("사용자 정보가 없습니다.");
+            finish();
+            return;
+        }
+
+        loadPublicPlate(userId);
     }
 
-    //TODO: 친구 스티커 목록 API 연동
-    private void loadSampleStickers() {
+    // 1. 타인 공개 플레이트 조회
+    private void loadPublicPlate(int userId) {
 
-        dessertStickers.clear();
+        TextView title = findViewById(R.id.tv_plate_title);
+        title.setText("불러오는 중...");
 
-        dessertStickers.add(new DessertSticker(
-                R.drawable.dessert_donut, "도넛", true));
+        plateCall = DessertApplication.container(this)
+                .friendRepository.getPublicPlate(
+                        userId,
+                        null,
+                        new ApiCallback<PublicPlateDto>() {
 
-        dessertStickers.add(new DessertSticker(
-                R.drawable.dessert_croissant, "크루아상", false));
+                            @Override
+                            public void onSuccess(PublicPlateDto data) {
+                                if (isFinishing() || isDestroyed()) return;
 
-        dessertStickers.add(new DessertSticker(
-                R.drawable.dessert_canele, "까눌레", false));
+                                bindPlateData(data);
 
-        dessertStickers.add(new DessertSticker(
-                R.drawable.dessert_cake, "케이크", false));
+                                dessertStickers.clear();
 
-        dessertStickers.add(new DessertSticker(
-                R.drawable.dessert_choux, "슈", false));
+                                if (data.plate != null
+                                        && data.plate.stickers != null) {
+                                    dessertStickers.addAll(
+                                            data.plate.stickers
+                                    );
+                                }
+
+                                plateLoaded = true;
+
+                                dessertPlate.post(
+                                        FriendPlateActivity.this
+                                                ::renderDessertStickers
+                                );
+                            }
+
+                            @Override
+                            public void onError(ApiError error) {
+                                if (isFinishing() || isDestroyed()) return;
+
+                                title.setText("플레이트 조회 실패");
+                                showToast(error.userMessage);
+                            }
+                        }
+                );
     }
 
+    // 2. 서버에서 받은 스티커를 접시에 배치
     private void renderDessertStickers() {
 
+        if (!plateLoaded || isFinishing() || isDestroyed()) return;
+
+        removeStickerLabel();
         dessertPlate.removeAllViews();
 
         int plateWidth = dessertPlate.getWidth();
         int plateHeight = dessertPlate.getHeight();
         int count = dessertStickers.size();
 
-        if (plateWidth <= 0 || plateHeight <= 0 || count == 0) {
+        if (plateWidth <= 0 || plateHeight <= 0) {
+            return;
+        }
+
+        // 빈 플레이트 처리
+        if (count == 0) {
+
+            TextView empty = new TextView(this);
+            empty.setText("접시 위에 스티커가 없어요.");
+            empty.setTextSize(13);
+            empty.setTextColor(
+                    ContextCompat.getColor(
+                            this, R.color.text_secondary
+                    )
+            );
+
+            dessertPlate.addView(
+                    empty,
+                    new FrameLayout.LayoutParams(
+                            FrameLayout.LayoutParams.WRAP_CONTENT,
+                            FrameLayout.LayoutParams.WRAP_CONTENT,
+                            Gravity.CENTER
+                    )
+            );
+
             return;
         }
 
         int diameter = Math.min(plateWidth, plateHeight);
 
-        float centerX = plateWidth / 2f;
-        float centerY = plateHeight / 2f;
-
-        float radius = diameter * 0.56f;
-
         int imageSize = Math.max(1, (int) (
                 diameter * Math.min(0.28, 0.95 / Math.sqrt(count))
         ));
 
-        List<float[]> positions = new ArrayList<>();
-
-        // 모든 스티커의 위치를 찾을 때까지 재시도
-        while (imageSize > 0) {
-
-            positions.clear();
-
-            float availableRadius =
-                    radius - imageSize * 0.71f;
-
-            float minDistance = imageSize * 0.8f;
-
-            for (int i = 0; i < count; i++) {
-
-                for (int attempt = 0; attempt < 500; attempt++) {
-
-                    float x = centerX
-                            + (random.nextFloat() * 2 - 1)
-                            * availableRadius;
-
-                    float y = centerY
-                            + (random.nextFloat() * 2 - 1)
-                            * availableRadius;
-
-                    // 접시 내부인지 확인
-                    if (Math.hypot(x - centerX, y - centerY)
-                            > availableRadius) {
-                        continue;
-                    }
-
-                    boolean overlapping = false;
-
-                    for (float[] position : positions) {
-
-                        double distance = Math.hypot(
-                                x - position[0],
-                                y - position[1]
-                        );
-
-                        if (distance < minDistance) {
-                            overlapping = true;
-                            break;
-                        }
-                    }
-
-                    if (!overlapping) {
-                        positions.add(new float[]{x, y});
-                        break;
-                    }
-                }
-            }
-
-            // 모든 스티커 배치 성공
-            if (positions.size() == count) {
-                break;
-            }
-
-            // 실패하면 크기를 줄이고 처음부터 다시 배치
-            imageSize = Math.min(imageSize - 1,
-                    (int) (imageSize * 0.95f));
-        }
-
-        if (imageSize <= 0 || positions.size() != count) {
-            return;
-        }
-
-        // 위치가 모두 결정된 후 이미지 생성
-        for (int i = 0; i < count; i++) {
-
-            DessertSticker sticker = dessertStickers.get(i);
+        for (PublicPlateDto.StickerItem sticker : dessertStickers) {
 
             ImageView image = new ImageView(this);
 
-            image.setImageResource(sticker.getImageResId());
-            image.setContentDescription(sticker.getName());
+            image.setContentDescription(sticker.stickerName);
             image.setScaleType(ImageView.ScaleType.FIT_CENTER);
+
+            Glide.with(this)
+                    .load(sticker.stickerImgUrl)
+                    .into(image);
 
             FrameLayout.LayoutParams params =
                     new FrameLayout.LayoutParams(
@@ -192,29 +184,42 @@ public class FriendPlateActivity extends AppCompatActivity {
 
             params.gravity = Gravity.TOP | Gravity.LEFT;
 
-            params.leftMargin = (int) (
-                    positions.get(i)[0] - imageSize / 2f
+            // 서버의 정규화 좌표를 화면 좌표로 변환
+            float x = (float) (sticker.positionX * plateWidth);
+            float y = (float) (sticker.positionY * plateHeight);
+
+            params.leftMargin = Math.max(
+                    0,
+                    Math.min(
+                            Math.round(x - imageSize / 2f),
+                            plateWidth - imageSize
+                    )
             );
 
-            params.topMargin = (int) (
-                    positions.get(i)[1] - imageSize / 2f
+            params.topMargin = Math.max(
+                    0,
+                    Math.min(
+                            Math.round(y - imageSize / 2f),
+                            plateHeight - imageSize
+                    )
             );
 
             dessertPlate.addView(image, params);
+
             image.setOnClickListener(v ->
                     showStickerLabel(image, sticker));
         }
     }
 
+    // 3. 스티커 선택 말풍선
     private void showStickerLabel(
             ImageView image,
-            DessertSticker sticker) {
+            PublicPlateDto.StickerItem sticker) {
 
         boolean sameSticker = selectedStickerImage == image;
 
         removeStickerLabel();
 
-        // 같은 스티커를 다시 누르면 닫기
         if (sameSticker) {
             return;
         }
@@ -223,7 +228,6 @@ public class FriendPlateActivity extends AppCompatActivity {
 
         TextView label = new TextView(this);
 
-        // 공통 폰트 적용
         label.setTypeface(
                 ResourcesCompat.getFont(this, R.font.pretendard)
         );
@@ -253,7 +257,7 @@ public class FriendPlateActivity extends AppCompatActivity {
                     )
             );
 
-        } else {
+        } else if ("DIRECT".equals(sticker.acquisitionType)) {
 
             label.setText("요청하기");
 
@@ -267,6 +271,10 @@ public class FriendPlateActivity extends AppCompatActivity {
 
             label.setOnClickListener(v ->
                     showRequestDialog(sticker));
+
+        } else {
+
+            label.setText("요청할 수 없는 스티커에요.");
         }
 
         FrameLayout.LayoutParams params =
@@ -276,6 +284,7 @@ public class FriendPlateActivity extends AppCompatActivity {
                 );
 
         label.setVisibility(View.INVISIBLE);
+
         dessertPlate.addView(label, params);
 
         activeStickerLabel = label;
@@ -304,6 +313,7 @@ public class FriendPlateActivity extends AppCompatActivity {
         });
     }
 
+    // 4. 말풍선 제거
     private void removeStickerLabel() {
 
         if (activeStickerLabel != null) {
@@ -314,37 +324,30 @@ public class FriendPlateActivity extends AppCompatActivity {
         selectedStickerImage = null;
     }
 
-    private void showRequestDialog(DessertSticker sticker) {
+    // 5. 스티커 요청 확인 팝업
+    private void showRequestDialog(
+            PublicPlateDto.StickerItem sticker) {
 
         new AlertDialog.Builder(this)
                 .setTitle("스티커 요청")
                 .setMessage(
-                        TEST_FRIEND_NICKNAME + "님에게 "
-                                + sticker.getName()
+                        friendNickname + "님에게 "
+                                + sticker.stickerName
                                 + " 스티커를 요청하시겠습니까?"
                 )
                 .setNegativeButton("취소", null)
                 .setPositiveButton("요청하기", (dialog, which) -> {
 
                     // TODO: 스티커 요청 API 연동
-                    Toast.makeText(
-                            this,
-                            "테스트용 요청입니다.",
-                            Toast.LENGTH_SHORT
-                    ).show();
+                    showToast("스티커 요청 기능은 아직 연결되지 않았습니다.");
 
                     removeStickerLabel();
                 })
                 .show();
     }
 
-    private int dp(float value) {
-        return Math.round(
-                value * getResources().getDisplayMetrics().density
-        );
-    }
-    // 친구 플레이트 데이터 화면에 적용
-    private void bindPlateData() {
+    // 6. 프로필 및 수집 현황 표시
+    private void bindPlateData(PublicPlateDto data) {
 
         TextView tvPlateTitle = findViewById(R.id.tv_plate_title);
         TextView tvFriendCode = findViewById(R.id.tv_friend_code);
@@ -361,48 +364,124 @@ public class FriendPlateActivity extends AppCompatActivity {
         TextView tvEtcCount = findViewById(R.id.tv_etc_count);
         TextView tvTotalCount = findViewById(R.id.tv_total_count);
 
-        ProgressBar pbFriendLevel = findViewById(R.id.pb_friend_level);
+        ProgressBar pbFriendLevel =
+                findViewById(R.id.pb_friend_level);
 
-        // 전체 수집 개수 계산
-        int totalCount = TEST_CAKE_COUNT
-                + TEST_BREAD_COUNT
-                + TEST_BAKED_COUNT
-                + TEST_ETC_COUNT;
+        ImageView ivFriendProfile =
+                findViewById(R.id.iv_friend_profile);
 
-        // 다음 레벨까지 남은 개수
-        int remainingCount = Math.max(
-                0, TEST_NEXT_LEVEL_TARGET - totalCount
-        );
+        friendNickname = data.userName;
 
-        // 프로필 데이터
+        // 프로필 정보
         tvPlateTitle.setText(
-                TEST_FRIEND_NICKNAME + "의 디저트 플레이트"
+                friendNickname + "의 디저트 플레이트"
         );
-        tvFriendCode.setText("친구 코드 : " + TEST_FRIEND_CODE);
-        tvFriendBio.setText(TEST_FRIEND_BIO);
 
-        // 레벨 데이터
+        tvFriendCode.setText(
+                "친구 코드 : " + data.userFriendCode
+        );
+
+        tvFriendBio.setText(
+                data.userDescription == null
+                        ? ""
+                        : data.userDescription
+        );
+
+        // 프로필 이미지
+        Glide.with(this)
+                .load(data.profileImageUrl)
+                .placeholder(R.drawable.profile_sample)
+                .fallback(R.drawable.profile_sample)
+                .error(R.drawable.profile_sample)
+                .into(ivFriendProfile);
+
+        // 레벨 및 수집 현황
+        int totalCount = data.totalStickerCount;
+        int goal = data.nextLevelRequiredCount;
+
         tvFriendLevel.setText(
-                "Lv. " + TEST_FRIEND_LEVEL + " · " + TEST_LEVEL_TITLE
+                "Lv. " + data.userLevel + " · " + data.userTitle
         );
-        tvNextLevel.setText(
-                "다음 레벨까지 " + remainingCount + "개 디저트 기록"
-        );
+
+        if (data.remainingStickerCount > 0) {
+
+            tvNextLevel.setText(
+                    "다음 레벨까지 "
+                            + data.remainingStickerCount
+                            + "개 디저트 기록"
+            );
+
+        } else {
+
+            tvNextLevel.setText("목표 수집 개수 달성");
+        }
+
         tvLevelCurrent.setText(String.valueOf(totalCount));
-        tvLevelMax.setText("/ " + TEST_NEXT_LEVEL_TARGET);
+        tvLevelMax.setText("/ " + goal);
 
-        // 레벨 진행률
-        pbFriendLevel.setMax(TEST_NEXT_LEVEL_TARGET);
-        pbFriendLevel.setProgress(totalCount);
+        pbFriendLevel.setMax(Math.max(1, goal));
+        pbFriendLevel.setProgress(
+                Math.min(totalCount, Math.max(1, goal))
+        );
 
-        // 카테고리별 수집 개수
-        tvCakeCount.setText("케이크 " + TEST_CAKE_COUNT);
-        tvBreadCount.setText("빵 " + TEST_BREAD_COUNT);
-        tvBakedCount.setText("구움과자 " + TEST_BAKED_COUNT);
-        tvEtcCount.setText("기타 " + TEST_ETC_COUNT);
+        // 카테고리별 수집 현황
+        bindCategoryCount(tvCakeCount, data, "케이크");
+        bindCategoryCount(tvBreadCount, data, "빵");
+        bindCategoryCount(tvBakedCount, data, "구움과자");
+        bindCategoryCount(tvEtcCount, data, "기타");
 
-        // 전체 수집 개수
         tvTotalCount.setText(totalCount + "개 수집");
     }
 
+    // 7. 카테고리별 수집 개수 표시
+    private void bindCategoryCount(
+            TextView view,
+            PublicPlateDto data,
+            String categoryName) {
+
+        if (data.categoryCounts != null) {
+
+            for (PublicPlateDto.CategoryCount category
+                    : data.categoryCounts) {
+
+                if (categoryName.equals(category.categoryName)) {
+
+                    view.setVisibility(View.VISIBLE);
+
+                    view.setText(
+                            categoryName + " " + category.count
+                    );
+
+                    return;
+                }
+            }
+        }
+
+        // 서버에 없는 카테고리는 표시하지 않음
+        view.setVisibility(View.GONE);
+    }
+
+    private int dp(float value) {
+        return Math.round(
+                value * getResources().getDisplayMetrics().density
+        );
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(
+                this,
+                message,
+                Toast.LENGTH_SHORT
+        ).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+
+        if (plateCall != null) {
+            plateCall.cancel();
+        }
+
+        super.onDestroy();
+    }
 }

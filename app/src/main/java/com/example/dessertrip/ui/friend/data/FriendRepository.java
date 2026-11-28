@@ -38,4 +38,16 @@ public class FriendRepository {
                 callback
         );
     }
+
+    // 타인 공개 플레이트 조회
+    public Call<PublicPlateDto> getPublicPlate(
+            int userId,
+            Integer categoryId,
+            ApiCallback<PublicPlateDto> callback
+    ) {
+        return parser.enqueue(
+                api.getPublicPlate(userId, categoryId),
+                callback
+        );
+    }
 }

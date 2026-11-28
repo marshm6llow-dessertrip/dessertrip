@@ -5,7 +5,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
-
+import retrofit2.http.Path;
 public interface FriendApi {
 
     // 친구 코드로 사용자 검색
@@ -18,5 +18,12 @@ public interface FriendApi {
     @POST("api/v1/users/me/friend-requests")
     Call<FriendRequestResponseDto> sendFriendRequest(
             @Body FriendRequestDto request
+    );
+
+    // 타인 공개 플레이트 조회
+    @GET("api/v1/users/{userId}/plate")
+    Call<PublicPlateDto> getPublicPlate(
+            @Path("userId") int userId,
+            @Query("category_id") Integer categoryId
     );
 }
