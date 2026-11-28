@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_gift_friend"
+    android:layout_width="match_parent"
+    android:layout_height="72dp"
+    android:layout_marginTop="10dp"
+    android:background="@drawable/bg_gift_friend_unselected"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:padding="14dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_gift_friend_avatar"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:src="@drawable/profile_sample"
+        android:scaleType="centerCrop"
+        android:contentDescription="친구 프로필 이미지" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="12dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_gift_friend_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:textColor="@color/text_primary" />
+
+        <TextView
+            android:id="@+id/tv_gift_friend_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:textSize="11sp"
+            android:textColor="@color/text_secondary" />
+
+    </LinearLayout>
+
+    <RadioButton
+        android:id="@+id/rb_gift_friend"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:buttonTint="@color/primary"
+        android:checked="false" />
+
+</LinearLayout>

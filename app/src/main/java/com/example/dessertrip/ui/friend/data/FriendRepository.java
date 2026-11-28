@@ -50,4 +50,35 @@ public class FriendRepository {
                 callback
         );
     }
+
+    // 친구 목록 조회 및 닉네임 검색
+    public Call<FriendListDto> getFriends(
+            String keyword,
+            ApiCallback<FriendListDto> callback
+    ) {
+        return parser.enqueue(
+                api.getFriends(keyword),
+                callback
+        );
+    }
+
+    // 스티커 선물 보내기
+    public Call<StickerGiftCreateResponse> sendStickerGift(
+            int stickerId,
+            int receiverId,
+            String message,
+            ApiCallback<StickerGiftCreateResponse> callback
+    ) {
+        StickerGiftCreateRequest request =
+                new StickerGiftCreateRequest(
+                        stickerId,
+                        receiverId,
+                        message
+                );
+
+        return parser.enqueue(
+                api.sendStickerGift(request),
+                callback
+        );
+    }
 }

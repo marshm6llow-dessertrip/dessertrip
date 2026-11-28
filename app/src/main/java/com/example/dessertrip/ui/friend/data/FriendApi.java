@@ -26,4 +26,16 @@ public interface FriendApi {
             @Path("userId") int userId,
             @Query("category_id") Integer categoryId
     );
+
+    // 친구 목록 조회 및 닉네임 검색
+    @GET("api/v1/users/me/friends")
+    Call<FriendListDto> getFriends(
+            @Query("keyword") String keyword
+    );
+
+    // 스티커 선물 보내기
+    @POST("api/v1/users/me/sticker-gifts")
+    Call<StickerGiftCreateResponse> sendStickerGift(
+            @Body StickerGiftCreateRequest request
+    );
 }
