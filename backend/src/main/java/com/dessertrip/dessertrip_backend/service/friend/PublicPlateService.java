@@ -92,6 +92,9 @@ public class PublicPlateService {
         int level = PlatePolicy.levelFor(collected);
         String title = levels.titleNameFor(level);
 
+        int next = PlatePolicy.nextLevelRequired(level);
+        int remaining = Math.max(0, next - collected);
+
         // 5. 카테고리별 수집 개수
         List<PublicPlateResponse.CategoryCount> counts =
                 new ArrayList<>();
@@ -105,6 +108,7 @@ public class PublicPlateService {
 
             counts.add(new PublicPlateResponse.CategoryCount(
                     category.getId(),
+                    category.getName(),
                     count
             ));
         }
@@ -164,6 +168,7 @@ public class PublicPlateService {
 
                 items.add(new PublicPlateResponse.StickerItem(
                         sticker.getId(),
+                        sticker.getName(),
                         urls.toUrl(sticker.getImgUrl()),
                         placement.getPositionX(),
                         placement.getPositionY(),
@@ -177,9 +182,14 @@ public class PublicPlateService {
                 targetUser.getId(),
                 targetUser.getName(),
                 targetUser.getFriendCode(),
+                targetUser.getDescription() == null
+                        ? "" : targetUser.getDescription(),
+                targetUser.getProfileImgUrl(),
                 level,
                 title,
                 collected,
+                next,
+                remaining,
                 counts,
                 new PublicPlateResponse.Plate(
                         plate == null ? null : plate.getId(),
