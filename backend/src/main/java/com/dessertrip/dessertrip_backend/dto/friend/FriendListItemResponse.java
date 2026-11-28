@@ -9,6 +9,15 @@ public record FriendListItemResponse(
         String nickname,
 
         @JsonProperty("profile_image_url")
-        String profileImageUrl
+        String profileImageUrl,
+
+        @JsonProperty("friend_code")
+        String friendCode,
+
+        @JsonProperty("user_level")
+        int userLevel,
+
+        @JsonProperty("user_title")
+        String userTitle
 ) {
 }

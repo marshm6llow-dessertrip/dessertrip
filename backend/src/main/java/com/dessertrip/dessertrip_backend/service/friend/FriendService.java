@@ -21,6 +21,11 @@ import com.dessertrip.dessertrip_backend.dto.friend.FriendListResponse;
 import com.dessertrip.dessertrip_backend.dto.friend.FriendDeleteResponse;
 import com.dessertrip.dessertrip_backend.dto.friend.UserSearchItemResponse;
 import com.dessertrip.dessertrip_backend.dto.friend.UserSearchResponse;
+import com.dessertrip.dessertrip_backend.repository.collect.DessertRepository;
+import com.dessertrip.dessertrip_backend.service.collect.UserLevelService;
+import com.dessertrip.dessertrip_backend.common.collect.PlatePolicy;
+import java.util.Locale;
+
 
 import java.util.List;
 import org.springframework.stereotype.Service;
@@ -29,6 +34,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class FriendService {
 
+    private final DessertRepository dessertRepository;
+    private final UserLevelService levels;
     private final CurrentUserService currentUserService;
     private final UserRepository userRepository;
     private final FriendRepository friendRepository;
@@ -38,12 +45,16 @@ public class FriendService {
             CurrentUserService currentUserService,
             UserRepository userRepository,
             FriendRepository friendRepository,
-            FriendRequestRepository friendRequestRepository
+            FriendRequestRepository friendRequestRepository,
+            DessertRepository dessertRepository,
+            UserLevelService levels
     ) {
         this.currentUserService = currentUserService;
         this.userRepository = userRepository;
         this.friendRepository = friendRepository;
         this.friendRequestRepository = friendRequestRepository;
+        this.dessertRepository = dessertRepository;
+        this.levels = levels;
     }
 
     @Transactional
@@ -224,26 +235,57 @@ public class FriendService {
     }
 
     @Transactional(readOnly = true)
-    public FriendListResponse getFriends() {
+    public FriendListResponse getFriends(String keyword) {
+
         User currentUser = currentUserService.get();
 
+        // 검색어 정리
+        String searchWord = keyword == null
+                ? ""
+                : keyword.trim().toLowerCase(Locale.ROOT);
+
+        // 현재 사용자의 친구 관계 조회
         List<Friend> friendships =
                 friendRepository.findAllByUserId(currentUser.getId());
 
         List<FriendListItemResponse> friends = friendships.stream()
-                .map(friendship -> {
-                    User friendUser;
 
-                    if (friendship.getUser().getId().equals(currentUser.getId())) {
-                        friendUser = friendship.getFriendUser();
-                    } else {
-                        friendUser = friendship.getUser();
+                // 친구 관계에서 상대방 사용자 추출
+                .map(friendship -> {
+                    if (friendship.getUser().getId()
+                            .equals(currentUser.getId())) {
+                        return friendship.getFriendUser();
                     }
+
+                    return friendship.getUser();
+                })
+
+                // 닉네임 부분 일치 검색
+                .filter(friendUser ->
+                        searchWord.isEmpty()
+                                || friendUser.getName()
+                                .toLowerCase(Locale.ROOT)
+                                .contains(searchWord)
+                )
+
+                // 응답 데이터 생성
+                .map(friendUser -> {
+
+                    long collected = dessertRepository
+                            .countByUserIdAndStickerPresentFalse(
+                                    friendUser.getId()
+                            );
+
+                    int level = PlatePolicy.levelFor(collected);
+                    String title = levels.titleNameFor(level);
 
                     return new FriendListItemResponse(
                             friendUser.getId(),
                             friendUser.getName(),
-                            friendUser.getProfileImgUrl()
+                            friendUser.getProfileImgUrl(),
+                            friendUser.getFriendCode(),
+                            level,
+                            title
                     );
                 })
                 .toList();

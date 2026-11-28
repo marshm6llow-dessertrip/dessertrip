@@ -64,8 +64,13 @@ public class FriendController {
         );
     }
     @GetMapping("/me/friends")
-    public ResponseEntity<FriendListResponse> getFriends() {
-        return ResponseEntity.ok(friendService.getFriends());
+    public ResponseEntity<FriendListResponse> getFriends(
+            @RequestParam(name = "keyword", required = false)
+            String keyword
+    ) {
+        return ResponseEntity.ok(
+                friendService.getFriends(keyword)
+        );
     }
 
     @DeleteMapping("/me/friends/{friendId}")
