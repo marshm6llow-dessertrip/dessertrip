@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.dessertrip.MainActivity;
 import com.example.dessertrip.R;
 import com.example.dessertrip.databinding.ActivityLoginBinding;
 
@@ -72,10 +73,9 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
-        // TODO: 서버/Firebase 로그인 연결
-        // 성공하면 메인 화면으로 이동:
-        // Intent intent = new Intent(this, MainActivity.class);
-        // intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        // startActivity(intent);
+        // TODO: 서버/Firebase 로그인 연동 후 실제 검사로 교체 (현재는 임시 통과)
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 }
