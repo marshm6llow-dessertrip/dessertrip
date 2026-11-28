@@ -89,6 +89,9 @@ public class DessertRepository {
 
     // ---------- 도감 ----------
 
+    public Call<ProfileDto> getProfile(ApiCallback<ProfileDto> callback) {
+        return parser.enqueue(api.getProfile(), callback);
+    }
     /** 도감 화면 위쪽 카드: 프로필(이름·친구 코드) + 도감 통계(레벨·진행도·카테고리별 개수) */
     public void getPlate(final ApiCallback<PlateDto> cb) {
         parser.enqueue(api.getProfile(), new ApiCallback<ProfileDto>() {

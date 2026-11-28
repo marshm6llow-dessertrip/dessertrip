@@ -12,6 +12,8 @@ import com.dessertrip.dessertrip_backend.entity.collect.DessertCategory;
 import com.dessertrip.dessertrip_backend.entity.collect.User;
 import com.dessertrip.dessertrip_backend.repository.collect.CategoryRepository;
 import com.dessertrip.dessertrip_backend.repository.collect.DessertRepository;
+import com.dessertrip.dessertrip_backend.repository.friend.FriendRepository;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,14 +38,22 @@ public class CollectionService {
     private final CurrentUserService currentUser;
     private final UserLevelService levels;
     private final FileUrlResolver urls;
+    private final FriendRepository friendRepository;
 
-    public CollectionService(DessertRepository dessertRepository, CategoryRepository categoryRepository,
-                             CurrentUserService currentUser, UserLevelService levels, FileUrlResolver urls) {
+    public CollectionService(
+            DessertRepository dessertRepository,
+            CategoryRepository categoryRepository,
+            CurrentUserService currentUser,
+            UserLevelService levels,
+            FileUrlResolver urls,
+            FriendRepository friendRepository
+    ) {
         this.dessertRepository = dessertRepository;
         this.categoryRepository = categoryRepository;
         this.currentUser = currentUser;
         this.levels = levels;
         this.urls = urls;
+        this.friendRepository = friendRepository;
     }
 
     /** sort: recent(기본, 최근 수집순) | oldest | name */
@@ -132,7 +142,7 @@ public class CollectionService {
                 me.getDescription() == null ? "" : me.getDescription(),
                 level, levels.titleNameFor(level), collected,
                 (int) dessertRepository.countByUserIdAndRatingIsNotNull(me.getId()),
-                0,                                   // 친구 기능이 아직 없다
+                friendRepository.findAllByUserId(me.getId()).size(),
                 Math.max(0, next - collected), stickers);
     }
 
