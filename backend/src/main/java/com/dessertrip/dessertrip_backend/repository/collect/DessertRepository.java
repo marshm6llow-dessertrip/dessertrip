@@ -10,6 +10,11 @@ import java.util.Optional;
 public interface DessertRepository extends JpaRepository<Dessert, Integer> {
 
     /** 내 도감 목록: 스티커/카테고리/카페는 한 번에, 사진·태그는 묶음(batch)으로 가져온다 (N+1 방지). 등록 순. */
+    @EntityGraph(attributePaths = {"sticker", "category"})
+    Optional<Dessert> findBySticker_IdAndUserId(
+            Integer stickerId,
+            Integer userId
+    );
     @EntityGraph(attributePaths = {"sticker", "category", "cafe"})
     List<Dessert> findByUserIdOrderByIdAsc(Integer userId);
 

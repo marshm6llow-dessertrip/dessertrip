@@ -53,6 +53,12 @@ public class Sticker extends BaseTimeEntity {
         return s;
     }
 
+    public static Sticker gift(Integer userId, Sticker source) {
+        Sticker s = gift(userId, source.getName(), source.getImgUrl());
+        s.sourceStickerId = source.getId();
+        return s;
+    }
+
     public void rename(String name) { this.name = name; }
 
     public Integer getId() { return id; }
